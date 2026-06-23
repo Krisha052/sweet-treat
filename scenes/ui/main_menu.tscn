@@ -1,3 +1,19 @@
-[gd_scene format=3 uid="uid://c100000000002"]
+[gd_scene load_steps=2 format=3 uid="uid://c100000000002"]
+
+[ext_resource type="Script" uid="uid://c200000000020" path="res://scripts/ui/main_menu.gd" id="1_menu"]
 
 [node name="MainMenu" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1_menu")
+
+[node name="StartButton" type="Button" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -30.0
+offset_right = 100.0
+offset_bottom = 30.0
+text = "Start"
