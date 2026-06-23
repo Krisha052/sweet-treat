@@ -16,3 +16,6 @@ script = ExtResource("1_base")
 [node name="OrderManager" parent="." instance=ExtResource("2_base")]
 
 [node name="HUD" parent="." instance=ExtResource("3_base")]
+
+[connection signal="all_orders_cleared" from="OrderManager" to="." method="on_all_orders_cleared"]
+[connection signal="time_updated" from="." to="HUD" method="update_timer"]

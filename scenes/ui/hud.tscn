@@ -1,9 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://c100000000004"]
+[gd_scene load_steps=3 format=3 uid="uid://c100000000004"]
 
 [ext_resource type="Script" uid="uid://c200000000006" path="res://scripts/ui/hud.gd" id="1_hud"]
+[ext_resource type="PackedScene" uid="uid://c100000000005" path="res://scenes/ui/receipt.tscn" id="2_hud"]
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource("1_hud")
+receipt_scene = ExtResource("2_hud")
 
 [node name="TimerLabel" type="Label" parent="."]
 
