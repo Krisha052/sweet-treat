@@ -1,0 +1,10 @@
+PALETTE INFORMATION
+
+This asset pack uses the following color palette:
+
+JEXRU 64
+https://lospec.com/palette-list/jexru-64
+
+You can download the palette in your preferred format from Lospec.
+
+All credit for the palette goes to its original creator.
