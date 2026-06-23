@@ -1,0 +1,3 @@
+[gd_scene format=3 uid="uid://c100000000002"]
+
+[node name="MainMenu" type="Control"]

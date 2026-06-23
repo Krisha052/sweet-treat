@@ -1,6 +1,8 @@
 # Godot 4+ specific ignores
 .godot/
 /android/
+*.translation
+export_presets.cfg
 
 # macOS
 .DS_Store

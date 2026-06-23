@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://c100000000006"]
+
+[ext_resource type="Script" uid="uid://c200000000002" path="res://scripts/gameplay/ingredient.gd" id="1_ingr"]
+
+[node name="Ingredient" type="Area3D"]
+script = ExtResource("1_ingr")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
