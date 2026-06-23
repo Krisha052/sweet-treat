@@ -1,8 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://c100000000003"]
+[gd_scene load_steps=4 format=3 uid="uid://c100000000003"]
 
 [ext_resource type="Script" uid="uid://c200000000007" path="res://scripts/ui/level_select.gd" id="1_lvls"]
 [ext_resource type="Resource" uid="uid://c300000000003" path="res://data/levels/level_01.tres" id="2_lvls"]
+[ext_resource type="PackedScene" uid="uid://c100000000009" path="res://scenes/ui/level_button.tscn" id="3_lvls"]
 
 [node name="LevelSelect" type="Control"]
 script = ExtResource("1_lvls")
 level_configs = Array[LevelConfig]([ExtResource("2_lvls")])
+level_button_scene = ExtResource("3_lvls")
