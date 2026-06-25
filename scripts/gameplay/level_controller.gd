@@ -49,6 +49,11 @@ func _spawn_ingredients(config: LevelConfig) -> void:
 			if not found:
 				unique.append(ing)
 
+	var ids: PackedStringArray = []
+	for d in unique:
+		ids.append(d.id)
+	print("Level %d: spawning %d ingredient(s): %s" % [config.level_id, unique.size(), ", ".join(ids)])
+
 	var n := unique.size()
 	var spacing := 80.0
 	var start_x := -(n - 1) * spacing * 0.5
