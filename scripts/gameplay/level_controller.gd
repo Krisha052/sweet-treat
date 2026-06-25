@@ -49,21 +49,42 @@ func _spawn_ingredients(config: LevelConfig) -> void:
 			if not found:
 				unique.append(ing)
 
+	var n := unique.size()
 	var ids: PackedStringArray = []
 	for d in unique:
 		ids.append(d.id)
-	print("Level %d: spawning %d ingredient(s): %s" % [config.level_id, unique.size(), ", ".join(ids)])
+	print("Level %d: spawning %d ingredient(s): %s" % [config.level_id, n, ", ".join(ids)])
 
-	var n := unique.size()
-	var spacing := 80.0
-	var start_x := -(n - 1) * spacing * 0.5
+	# Ingredient textures are 160×160px; use 180px cells (20px gap between edges).
+	# Grid is centered on the viewport and wraps after MAX_COLS columns.
+	const CELL := 180.0
+	const MAX_COLS := 4
+	var vp := get_viewport().get_visible_rect().size
+	var cols := mini(n, mini(MAX_COLS, maxi(1, floori(vp.x / CELL))))
+	var n_rows := ceili(float(n) / float(cols))
+	var row_w := float(cols) * CELL
+	var grid_h := float(n_rows) * CELL
+	var origin_x := (vp.x - row_w) * 0.5 + CELL * 0.5
+	var origin_y := clampf(
+		vp.y * 0.75 - float(n_rows - 1) * CELL * 0.5,
+		CELL * 0.5 + 10.0,
+		vp.y - grid_h + CELL * 0.5 - 10.0
+	)
+
 	for i in n:
+		var col := i % cols
+		var row := i / cols
+		var items_in_row := mini(n - row * cols, cols)
+		var row_shift := float(cols - items_in_row) * CELL * 0.5
+		var pos := Vector2(origin_x + float(col) * CELL + row_shift, origin_y + float(row) * CELL)
+
 		var data: IngredientData = unique[i]
 		var template: PackedScene = data.scene if data.scene else _FALLBACK_SCENE
 		var node := template.instantiate() as Node2D
 		node.set("ingredient_data", data)
-		node.position = Vector2(start_x + i * spacing, 400.0)
+		node.position = pos
 		$Ingredients.add_child(node)
+		print("  [%d] %s -> (%.0f, %.0f)" % [i, data.id, pos.x, pos.y])
 
 func _on_tick() -> void:
 	_time_remaining -= 1.0
