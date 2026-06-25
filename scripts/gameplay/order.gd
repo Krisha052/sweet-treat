@@ -19,6 +19,14 @@ func collect(slot: Ingredient) -> bool:
 		return true
 	return false
 
+func uncollect(slot: Ingredient) -> bool:
+	var idx := _collected_slots.find(slot)
+	if idx == -1:
+		return false
+	_collected_slots.remove_at(idx)
+	slot.deselect()
+	return true
+
 func get_consumed_slots() -> Array[Ingredient]:
 	return _collected_slots
 

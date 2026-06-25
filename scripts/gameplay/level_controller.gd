@@ -91,7 +91,10 @@ func _random_ingredient() -> IngredientData:
 # --- Tap routing ---
 
 func _on_ingredient_tapped(slot: Ingredient) -> void:
-	_order_manager.on_ingredient_tapped(slot)
+	if slot.selected:
+		_order_manager.try_deselect(slot)
+	else:
+		_order_manager.on_ingredient_tapped(slot)
 
 # --- Order completion + board refill ---
 

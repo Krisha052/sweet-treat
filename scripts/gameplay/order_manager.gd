@@ -28,6 +28,11 @@ func on_ingredient_tapped(slot: Ingredient) -> void:
 		if not order.is_complete() and order.collect(slot):
 			return
 
+func try_deselect(slot: Ingredient) -> void:
+	for order in _active_orders:
+		if order.uncollect(slot):
+			return
+
 func needs_next_order() -> bool:
 	return _completed_count < _total_orders and \
 		_active_orders.size() < level_config.max_simultaneous_orders
