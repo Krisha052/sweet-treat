@@ -3,13 +3,16 @@ extends Node2D
 signal time_updated(seconds_left: float)
 
 @onready var _timer: Timer = $Timer
-@onready var _order_manager = $OrderManager
+@onready var _order_manager: OrderManager = $OrderManager
 @onready var _hud = $HUD
 
-const _FALLBACK_SCENE := preload("res://scenes/gameplay/ingredient.tscn")
+const _INGREDIENT_SCENE := preload("res://scenes/gameplay/ingredient.tscn")
+const BOARD_COLS := 4
+const BOARD_ROWS := 4
 
 var level_config: LevelConfig
 var _time_remaining: float = 0.0
+var _eligible_ingredients: Array[IngredientData] = []
 
 func _ready() -> void:
 	var config := GameManager.pending_level_config
@@ -21,15 +24,16 @@ func _ready() -> void:
 	level_config = config
 	GameManager.start_level(config)
 
-	_spawn_ingredients(config)
+	_build_eligible_set(config)
+	_init_board()
 
 	_order_manager.order_spawned.connect(_hud.add_receipt)
-	_order_manager.order_completed.connect(_hud.remove_receipt)
-
-	for ingredient in $Ingredients.get_children():
-		ingredient.collected.connect(_order_manager.on_ingredient_collected)
-
+	_order_manager.order_completed.connect(_on_order_completed_cb)
 	_order_manager.setup(config)
+
+	var initial_count := mini(config.max_simultaneous_orders, config.recipe_pool.size())
+	for _i in initial_count:
+		_order_manager.spawn_order(_pick_next_recipe())
 
 	_time_remaining = config.time_limit_seconds
 	_timer.wait_time = 1.0
@@ -37,54 +41,113 @@ func _ready() -> void:
 	_timer.start()
 	time_updated.emit(_time_remaining)
 
-func _spawn_ingredients(config: LevelConfig) -> void:
-	var unique: Array[IngredientData] = []
+# --- Board setup ---
+
+func _build_eligible_set(config: LevelConfig) -> void:
+	_eligible_ingredients.clear()
 	for recipe in config.recipe_pool:
 		for ing: IngredientData in recipe.ingredients:
 			var found := false
-			for u in unique:
-				if u.id == ing.id:
+			for e in _eligible_ingredients:
+				if e.id == ing.id:
 					found = true
 					break
 			if not found:
-				unique.append(ing)
-
-	var n := unique.size()
+				_eligible_ingredients.append(ing)
 	var ids: PackedStringArray = []
-	for d in unique:
+	for d in _eligible_ingredients:
 		ids.append(d.id)
-	print("Level %d: spawning %d ingredient(s): %s" % [config.level_id, n, ", ".join(ids)])
+	print("Level %d: eligible ingredients (%d): %s" % [
+		config.level_id, _eligible_ingredients.size(), ", ".join(ids)])
 
-	# Ingredient textures are 160×160px; use 180px cells (20px gap between edges).
-	# Grid is centered on the viewport and wraps after MAX_COLS columns.
-	const CELL := 180.0
-	const MAX_COLS := 4
+func _init_board() -> void:
 	var vp := get_viewport().get_visible_rect().size
-	var cols := mini(n, mini(MAX_COLS, maxi(1, floori(vp.x / CELL))))
-	var n_rows := ceili(float(n) / float(cols))
-	var row_w := float(cols) * CELL
-	var grid_h := float(n_rows) * CELL
+	const CELL := 180.0
+	var row_w := BOARD_COLS * CELL
 	var origin_x := (vp.x - row_w) * 0.5 + CELL * 0.5
 	var origin_y := clampf(
-		vp.y * 0.75 - float(n_rows - 1) * CELL * 0.5,
+		vp.y * 0.40,
 		CELL * 0.5 + 10.0,
-		vp.y - grid_h + CELL * 0.5 - 10.0
+		vp.y - BOARD_ROWS * CELL + CELL * 0.5 - 10.0
 	)
 
-	for i in n:
-		var col := i % cols
-		var row := i / cols
-		var items_in_row := mini(n - row * cols, cols)
-		var row_shift := float(cols - items_in_row) * CELL * 0.5
-		var pos := Vector2(origin_x + float(col) * CELL + row_shift, origin_y + float(row) * CELL)
+	print("Level %d: init %dx%d board, vp=(%.0f,%.0f), origin=(%.0f,%.0f)" % [
+		level_config.level_id, BOARD_COLS, BOARD_ROWS, vp.x, vp.y, origin_x, origin_y])
 
-		var data: IngredientData = unique[i]
-		var template: PackedScene = data.scene if data.scene else _FALLBACK_SCENE
-		var node := template.instantiate() as Node2D
-		node.set("ingredient_data", data)
+	for i in BOARD_COLS * BOARD_ROWS:
+		var col := i % BOARD_COLS
+		var row := i / BOARD_COLS
+		var pos := Vector2(origin_x + col * CELL, origin_y + row * CELL)
+		var data := _random_ingredient()
+		var node := _INGREDIENT_SCENE.instantiate() as Ingredient
+		node.ingredient_data = data
 		node.position = pos
+		node.tapped.connect(_on_ingredient_tapped)
 		$Ingredients.add_child(node)
-		print("  [%d] %s -> (%.0f, %.0f)" % [i, data.id, pos.x, pos.y])
+
+func _random_ingredient() -> IngredientData:
+	return _eligible_ingredients[randi() % _eligible_ingredients.size()]
+
+# --- Tap routing ---
+
+func _on_ingredient_tapped(slot: Ingredient) -> void:
+	_order_manager.on_ingredient_tapped(slot)
+
+# --- Order completion + board refill ---
+
+func _on_order_completed_cb(order: Order) -> void:
+	_hud.remove_receipt(order)
+
+	# Refill every slot consumed by this order with a fresh random ingredient.
+	for slot in order.get_consumed_slots():
+		var new_data := _random_ingredient()
+		print("[Refill] slot was %s -> now %s" % [slot.ingredient_data.id, new_data.id])
+		slot.refill(new_data)
+
+	# Spawn the next order if the level still has outstanding orders.
+	if _order_manager.needs_next_order():
+		_order_manager.spawn_order(_pick_next_recipe())
+
+# --- Recipe selection by board state ---
+
+func _pick_next_recipe() -> RecipeData:
+	# Count free (unselected) slots by ingredient id.
+	var free_counts: Dictionary = {}
+	for child in $Ingredients.get_children():
+		var slot := child as Ingredient
+		if slot and not slot.selected:
+			free_counts[slot.ingredient_data.id] = \
+				free_counts.get(slot.ingredient_data.id, 0) + 1
+
+	# Find all recipes the current free board can satisfy.
+	var satisfiable: Array[RecipeData] = []
+	for recipe in level_config.recipe_pool:
+		if _is_recipe_satisfiable(recipe, free_counts):
+			satisfiable.append(recipe)
+
+	if satisfiable.is_empty():
+		var fallback: RecipeData = level_config.recipe_pool[randi() % level_config.recipe_pool.size()]
+		print("[BoardMatch] No satisfiable recipe — random fallback: %s" % fallback.display_name)
+		return fallback
+
+	var chosen: RecipeData = satisfiable[randi() % satisfiable.size()]
+	var names: PackedStringArray = []
+	for r in satisfiable:
+		names.append(r.display_name)
+	print("[BoardMatch] %d satisfiable: [%s] -> chose: %s" % [
+		satisfiable.size(), ", ".join(names), chosen.display_name])
+	return chosen
+
+func _is_recipe_satisfiable(recipe: RecipeData, free_counts: Dictionary) -> bool:
+	var needed: Dictionary = {}
+	for ing: IngredientData in recipe.ingredients:
+		needed[ing.id] = needed.get(ing.id, 0) + 1
+	for id in needed:
+		if free_counts.get(id, 0) < needed[id]:
+			return false
+	return true
+
+# --- Timer ---
 
 func _on_tick() -> void:
 	_time_remaining -= 1.0
