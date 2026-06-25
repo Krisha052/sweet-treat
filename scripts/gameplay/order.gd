@@ -14,6 +14,10 @@ func collect(slot: Ingredient) -> bool:
 	if _collected_count(id) < _needed_count(id):
 		_collected_slots.append(slot)
 		slot.select()
+		print("[Credit] %s -> '%s'  (%d/%d for this ingredient, %d/%d total)" % [
+			id, recipe_data.display_name,
+			_collected_count(id), _needed_count(id),
+			_collected_slots.size(), recipe_data.ingredients.size()])
 		if is_complete():
 			completed.emit(self)
 		return true
