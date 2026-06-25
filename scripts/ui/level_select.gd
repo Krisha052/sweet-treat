@@ -3,6 +3,8 @@ extends Control
 @export var level_configs: Array[LevelConfig] = []
 @export var level_button_scene: PackedScene
 
+@onready var _list: VBoxContainer = $VBoxContainer
+
 func _ready() -> void:
 	_populate()
 
@@ -15,7 +17,7 @@ func _populate() -> void:
 		btn.text = "Level %d" % (i + 1)
 		btn.disabled = not SaveManager.is_level_unlocked(i)
 		btn.pressed.connect(_on_level_pressed.bind(config))
-		add_child(btn)
+		_list.add_child(btn)
 
 func _on_level_pressed(config: LevelConfig) -> void:
 	GameManager.pending_level_config = config

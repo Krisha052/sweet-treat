@@ -15,3 +15,9 @@
 script = ExtResource("1_lvls")
 level_configs = Array[LevelConfig]([ExtResource("2_lvls"), ExtResource("3_lvls"), ExtResource("4_lvls"), ExtResource("5_lvls"), ExtResource("6_lvls"), ExtResource("7_lvls"), ExtResource("8_lvls"), ExtResource("9_lvls")])
 level_button_scene = ExtResource("10_lvls")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+alignment = 1
+theme_override_constants/separation = 10
