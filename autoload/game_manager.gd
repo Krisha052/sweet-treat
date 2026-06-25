@@ -4,11 +4,14 @@ signal level_won
 signal level_failed
 
 var current_level_id: int = 0
+var current_level_config: LevelConfig = null
+var pending_level_config: LevelConfig = null
 var _win: bool = false
 var _fail: bool = false
 
-func start_level(level_id: int) -> void:
-	current_level_id = level_id
+func start_level(config: LevelConfig) -> void:
+	current_level_id = config.level_id
+	current_level_config = config
 	_win = false
 	_fail = false
 

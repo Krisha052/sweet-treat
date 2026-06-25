@@ -10,19 +10,20 @@ func _init(data: RecipeData) -> void:
 	recipe_data = data
 
 func collect(ingredient_id: String) -> void:
-	if _is_needed(ingredient_id) and ingredient_id not in _collected_ids:
+	if _collected_ids.count(ingredient_id) < _needed_count(ingredient_id):
 		_collected_ids.append(ingredient_id)
 		if is_complete():
 			completed.emit(self)
 
 func is_complete() -> bool:
 	for ingredient in recipe_data.ingredients:
-		if ingredient.id not in _collected_ids:
+		if _collected_ids.count(ingredient.id) < _needed_count(ingredient.id):
 			return false
 	return true
 
-func _is_needed(ingredient_id: String) -> bool:
+func _needed_count(ingredient_id: String) -> int:
+	var count := 0
 	for ingredient in recipe_data.ingredients:
 		if ingredient.id == ingredient_id:
-			return true
-	return false
+			count += 1
+	return count

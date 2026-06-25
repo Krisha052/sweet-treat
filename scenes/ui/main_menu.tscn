@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://c100000000002"]
 
-[ext_resource type="Script" uid="uid://c200000000020" path="res://scripts/ui/main_menu.gd" id="1_menu"]
+[ext_resource type="Script" uid="uid://buuepx13176ih" path="res://scripts/ui/main_menu.gd" id="1_menu"]
 
 [node name="MainMenu" type="Control"]
 anchor_right = 1.0

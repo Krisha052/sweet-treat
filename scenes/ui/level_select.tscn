@@ -1,10 +1,17 @@
-[gd_scene load_steps=4 format=3 uid="uid://c100000000003"]
+[gd_scene load_steps=11 format=3 uid="uid://c100000000003"]
 
-[ext_resource type="Script" uid="uid://c200000000007" path="res://scripts/ui/level_select.gd" id="1_lvls"]
-[ext_resource type="Resource" uid="uid://c300000000003" path="res://data/levels/level_01.tres" id="2_lvls"]
-[ext_resource type="PackedScene" uid="uid://c100000000009" path="res://scenes/ui/level_button.tscn" id="3_lvls"]
+[ext_resource type="Script" uid="uid://dsq63dt4hkdx7" path="res://scripts/ui/level_select.gd" id="1_lvls"]
+[ext_resource type="Resource" path="res://data/levels/level_01.tres" id="2_lvls"]
+[ext_resource type="Resource" path="res://data/levels/level_02.tres" id="3_lvls"]
+[ext_resource type="Resource" path="res://data/levels/level_03.tres" id="4_lvls"]
+[ext_resource type="Resource" path="res://data/levels/level_04.tres" id="5_lvls"]
+[ext_resource type="Resource" path="res://data/levels/level_05.tres" id="6_lvls"]
+[ext_resource type="Resource" path="res://data/levels/level_06.tres" id="7_lvls"]
+[ext_resource type="Resource" path="res://data/levels/level_07.tres" id="8_lvls"]
+[ext_resource type="Resource" path="res://data/levels/level_08.tres" id="9_lvls"]
+[ext_resource type="PackedScene" uid="uid://c100000000009" path="res://scenes/ui/level_button.tscn" id="10_lvls"]
 
 [node name="LevelSelect" type="Control"]
 script = ExtResource("1_lvls")
-level_configs = Array[LevelConfig]([ExtResource("2_lvls")])
-level_button_scene = ExtResource("3_lvls")
+level_configs = Array[LevelConfig]([ExtResource("2_lvls"), ExtResource("3_lvls"), ExtResource("4_lvls"), ExtResource("5_lvls"), ExtResource("6_lvls"), ExtResource("7_lvls"), ExtResource("8_lvls"), ExtResource("9_lvls")])
+level_button_scene = ExtResource("10_lvls")

@@ -1,7 +1,7 @@
-[gd_resource type="RecipeData" load_steps=3 format=3 uid="uid://c300000000002"]
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://c300000000002"]
 
-[ext_resource type="Script" uid="uid://c200000000009" path="res://scripts/resources/recipe_data.gd" id="1_bread"]
-[ext_resource type="Resource" uid="uid://c300000000001" path="res://data/ingredients/example_flour.tres" id="2_bread"]
+[ext_resource type="Script" uid="uid://brdfa23uei8xw" path="res://scripts/resources/recipe_data.gd" id="1_bread"]
+[ext_resource type="Resource" path="res://data/ingredients/example_flour.tres" id="2_bread"]
 
 [resource]
 script = ExtResource("1_bread")

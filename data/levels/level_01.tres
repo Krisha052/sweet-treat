@@ -1,11 +1,11 @@
-[gd_resource type="LevelConfig" load_steps=3 format=3 uid="uid://c300000000003"]
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://c300000000003"]
 
-[ext_resource type="Script" uid="uid://c200000000010" path="res://scripts/resources/level_config.gd" id="1_level"]
-[ext_resource type="Resource" uid="uid://c300000000002" path="res://data/recipes/example_bread.tres" id="2_level"]
+[ext_resource type="Script" path="res://scripts/resources/level_config.gd" id="1_level"]
+[ext_resource type="Resource" path="res://data/recipes/example_bread.tres" id="2_level"]
 
 [resource]
 script = ExtResource("1_level")
 level_id = 0
-time_limit_seconds = 60.0
-max_simultaneous_orders = 2
+time_limit_seconds = 90.0
+max_simultaneous_orders = 1
 recipe_pool = Array[RecipeData]([ExtResource("2_level")])

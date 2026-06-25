@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://c100000000007"]
 
-[ext_resource type="Script" uid="uid://c200000000003" path="res://scripts/gameplay/order_manager.gd" id="1_ordm"]
+[ext_resource type="Script" uid="uid://crtkx6obwx45f" path="res://scripts/gameplay/order_manager.gd" id="1_ordm"]
 
 [node name="OrderManager" type="Node"]
 script = ExtResource("1_ordm")
