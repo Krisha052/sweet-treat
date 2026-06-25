@@ -9,11 +9,13 @@ var _collected_ids: Array[String] = []
 func _init(data: RecipeData) -> void:
 	recipe_data = data
 
-func collect(ingredient_id: String) -> void:
+func collect(ingredient_id: String) -> bool:
 	if _collected_ids.count(ingredient_id) < _needed_count(ingredient_id):
 		_collected_ids.append(ingredient_id)
 		if is_complete():
 			completed.emit(self)
+		return true
+	return false
 
 func is_complete() -> bool:
 	for ingredient in recipe_data.ingredients:

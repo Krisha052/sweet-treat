@@ -30,8 +30,7 @@ func _spawn_order(recipe: RecipeData) -> void:
 
 func on_ingredient_collected(data: IngredientData) -> void:
 	for order in _active_orders:
-		if not order.is_complete():
-			order.collect(data.id)
+		if not order.is_complete() and order.collect(data.id):
 			return
 
 func _on_order_completed(order: Order) -> void:
