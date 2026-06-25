@@ -1,0 +1,11 @@
+[gd_resource type="Resource" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/ingredient_data.gd" id="1_foam"]
+[ext_resource type="Texture2D" path="res://assets/textures/ingredients/foam.png" id="2_foam"]
+
+[resource]
+script = ExtResource("1_foam")
+id = "foam"
+display_name = "Foam"
+color = Color(0.92, 0.92, 0.95, 1)
+icon = ExtResource("2_foam")
