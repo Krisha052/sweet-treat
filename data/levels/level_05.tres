@@ -1,0 +1,13 @@
+[gd_resource type="Resource" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/level_config.gd" id="1_lv5"]
+[ext_resource type="Resource" path="res://data/recipes/latte.tres" id="2_lv5"]
+[ext_resource type="Resource" path="res://data/recipes/cappuccino.tres" id="3_lv5"]
+[ext_resource type="Resource" path="res://data/recipes/coffee_cake.tres" id="4_lv5"]
+
+[resource]
+script = ExtResource("1_lv5")
+level_id = 4
+time_limit_seconds = 65.0
+max_simultaneous_orders = 2
+recipe_pool = Array[RecipeData]([ExtResource("2_lv5"), ExtResource("3_lv5"), ExtResource("4_lv5")])

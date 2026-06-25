@@ -1,0 +1,14 @@
+[gd_resource type="Resource" load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/level_config.gd" id="1_lv8"]
+[ext_resource type="Resource" path="res://data/recipes/cherry_cake.tres" id="2_lv8"]
+[ext_resource type="Resource" path="res://data/recipes/cappuccino.tres" id="3_lv8"]
+[ext_resource type="Resource" path="res://data/recipes/espresso.tres" id="4_lv8"]
+[ext_resource type="Resource" path="res://data/recipes/croissant.tres" id="5_lv8"]
+
+[resource]
+script = ExtResource("1_lv8")
+level_id = 7
+time_limit_seconds = 45.0
+max_simultaneous_orders = 3
+recipe_pool = Array[RecipeData]([ExtResource("2_lv8"), ExtResource("3_lv8"), ExtResource("4_lv8"), ExtResource("5_lv8")])
