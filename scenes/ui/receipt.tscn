@@ -2,5 +2,5 @@
 
 [ext_resource type="Script" uid="uid://ckar7ltj5o4iq" path="res://scripts/ui/receipt_display.gd" id="1_rcp"]
 
-[node name="ReceiptDisplay" type="Control"]
+[node name="ReceiptDisplay" type="VBoxContainer"]
 script = ExtResource("1_rcp")
