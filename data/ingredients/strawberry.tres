@@ -1,11 +1,11 @@
 [gd_resource type="Resource" load_steps=3 format=3]
 
-[ext_resource type="Script" path="res://scripts/resources/ingredient_data.gd" id="1"]
-[ext_resource type="PackedScene" path="res://scenes/gameplay/ingredient.tscn" id="2"]
+[ext_resource type="Script" path="res://scripts/resources/ingredient_data.gd" id="1_straw"]
+[ext_resource type="Texture2D" path="res://assets/textures/ingredients/strawberry.png" id="2_straw"]
 
 [resource]
-script = ExtResource("1")
+script = ExtResource("1_straw")
 id = "strawberry"
 display_name = "Strawberry"
 color = Color(0.9, 0.1, 0.2, 1)
-scene = ExtResource("2")
+icon = ExtResource("2_straw")

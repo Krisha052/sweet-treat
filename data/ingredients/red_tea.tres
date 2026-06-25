@@ -1,0 +1,11 @@
+[gd_resource type="Resource" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/ingredient_data.gd" id="1_rtea"]
+[ext_resource type="Texture2D" path="res://assets/textures/ingredients/redTea.png" id="2_rtea"]
+
+[resource]
+script = ExtResource("1_rtea")
+id = "red_tea"
+display_name = "Red Tea"
+color = Color(0.70, 0.25, 0.08, 1)
+icon = ExtResource("2_rtea")

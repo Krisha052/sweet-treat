@@ -1,0 +1,11 @@
+[gd_resource type="Resource" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/ingredient_data.gd" id="1_bmed"]
+[ext_resource type="Texture2D" path="res://assets/textures/ingredients/mediumroast.png" id="2_bmed"]
+
+[resource]
+script = ExtResource("1_bmed")
+id = "bean_medium_roast"
+display_name = "Bean (Medium Roast)"
+color = Color(0.45, 0.28, 0.10, 1)
+icon = ExtResource("2_bmed")

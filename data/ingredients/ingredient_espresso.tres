@@ -1,0 +1,9 @@
+[gd_resource type="Resource" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/ingredient_data.gd" id="1_esp"]
+
+[resource]
+script = ExtResource("1_esp")
+id = "espresso"
+display_name = "Espresso"
+color = Color(0.25, 0.12, 0.04, 1)

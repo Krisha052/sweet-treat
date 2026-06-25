@@ -1,0 +1,11 @@
+[gd_resource type="Resource" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/ingredient_data.gd" id="1_bdrk"]
+[ext_resource type="Texture2D" path="res://assets/textures/ingredients/darkroast.png" id="2_bdrk"]
+
+[resource]
+script = ExtResource("1_bdrk")
+id = "bean_dark_roast"
+display_name = "Bean (Dark Roast)"
+color = Color(0.18, 0.08, 0.02, 1)
+icon = ExtResource("2_bdrk")

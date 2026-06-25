@@ -1,0 +1,11 @@
+[gd_resource type="Resource" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/ingredient_data.gd" id="1_braw"]
+[ext_resource type="Texture2D" path="res://assets/textures/ingredients/raw.png" id="2_braw"]
+
+[resource]
+script = ExtResource("1_braw")
+id = "bean_raw"
+display_name = "Bean (Raw)"
+color = Color(0.3, 0.55, 0.2, 1)
+icon = ExtResource("2_braw")
