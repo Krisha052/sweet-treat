@@ -1,0 +1,12 @@
+[gd_resource type="Resource" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/recipe_data.gd" id="1_cfc"]
+[ext_resource type="Resource" path="res://data/ingredients/flour.tres" id="2_cfc"]
+[ext_resource type="Resource" path="res://data/ingredients/bean_medium_roast.tres" id="3_cfc"]
+[ext_resource type="Resource" path="res://data/ingredients/egg.tres" id="4_cfc"]
+
+[resource]
+script = ExtResource("1_cfc")
+id = "coffee_cake"
+display_name = "Coffee Cake"
+ingredients = Array[IngredientData]([ExtResource("2_cfc"), ExtResource("3_cfc"), ExtResource("4_cfc")])

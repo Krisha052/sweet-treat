@@ -1,0 +1,12 @@
+[gd_resource type="Resource" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/recipe_data.gd" id="1_brd"]
+[ext_resource type="Resource" path="res://data/ingredients/flour.tres" id="2_brd"]
+[ext_resource type="Resource" path="res://data/ingredients/milk.tres" id="3_brd"]
+[ext_resource type="Resource" path="res://data/ingredients/egg.tres" id="4_brd"]
+
+[resource]
+script = ExtResource("1_brd")
+id = "bread"
+display_name = "Bread"
+ingredients = Array[IngredientData]([ExtResource("2_brd"), ExtResource("3_brd"), ExtResource("4_brd"), ExtResource("4_brd")])

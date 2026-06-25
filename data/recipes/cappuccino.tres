@@ -1,0 +1,13 @@
+[gd_resource type="Resource" load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/recipe_data.gd" id="1_cap"]
+[ext_resource type="Resource" path="res://data/ingredients/bean_light_roast.tres" id="2_cap"]
+[ext_resource type="Resource" path="res://data/ingredients/bean_medium_roast.tres" id="3_cap"]
+[ext_resource type="Resource" path="res://data/ingredients/milk.tres" id="4_cap"]
+[ext_resource type="Resource" path="res://data/ingredients/foam.tres" id="5_cap"]
+
+[resource]
+script = ExtResource("1_cap")
+id = "cappuccino"
+display_name = "Cappuccino"
+ingredients = Array[IngredientData]([ExtResource("2_cap"), ExtResource("3_cap"), ExtResource("4_cap"), ExtResource("5_cap")])

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/recipe_data.gd" id="1_cco"]
+[ext_resource type="Resource" path="res://data/ingredients/coconut.tres" id="2_cco"]
+[ext_resource type="Resource" path="res://data/ingredients/flour.tres" id="3_cco"]
+[ext_resource type="Resource" path="res://data/ingredients/egg.tres" id="4_cco"]
+
+[resource]
+script = ExtResource("1_cco")
+id = "coconut_cake"
+display_name = "Coconut Cake"
+ingredients = Array[IngredientData]([ExtResource("2_cco"), ExtResource("2_cco"), ExtResource("3_cco"), ExtResource("4_cco")])

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/recipe_data.gd" id="1_stc"]
+[ext_resource type="Resource" path="res://data/ingredients/strawberry.tres" id="2_stc"]
+[ext_resource type="Resource" path="res://data/ingredients/flour.tres" id="3_stc"]
+[ext_resource type="Resource" path="res://data/ingredients/egg.tres" id="4_stc"]
+
+[resource]
+script = ExtResource("1_stc")
+id = "strawberry_cake"
+display_name = "Strawberry Cake"
+ingredients = Array[IngredientData]([ExtResource("2_stc"), ExtResource("2_stc"), ExtResource("3_stc"), ExtResource("4_stc")])
