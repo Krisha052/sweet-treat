@@ -65,6 +65,15 @@ func _is_completable(order: Order, free: Dictionary) -> bool:
 			return false
 	return true
 
+func any_active_order_satisfiable() -> bool:
+	if _active_orders.is_empty():
+		return true
+	var free := _free_board_counts()
+	for order in _active_orders:
+		if _is_completable(order, free):
+			return true
+	return false
+
 func try_deselect(slot: Ingredient) -> void:
 	for order in _active_orders:
 		if order.uncollect(slot):

@@ -8,8 +8,8 @@ signal time_updated(seconds_left: float)
 @onready var _bg: ColorRect = $BackgroundLayer/Background
 
 const _INGREDIENT_SCENE := preload("res://scenes/gameplay/ingredient.tscn")
-const BOARD_COLS := 4
-const BOARD_ROWS := 4
+const BOARD_COLS := 5
+const BOARD_ROWS := 5
 
 var level_config: LevelConfig
 var _time_remaining: float = 0.0
@@ -65,11 +65,12 @@ func _build_eligible_set(config: LevelConfig) -> void:
 
 func _init_board() -> void:
 	var vp := get_viewport().get_visible_rect().size
-	const CELL := 180.0
+	const CELL := 150.0
+	const SPRITE_SCALE := 0.8
 	var row_w := BOARD_COLS * CELL
 	var origin_x := (vp.x - row_w) * 0.5 + CELL * 0.5
 	var origin_y := clampf(
-		vp.y * 0.37,
+		vp.y * 0.358,
 		CELL * 0.5 + 10.0,
 		vp.y - BOARD_ROWS * CELL + CELL * 0.5 - 10.0
 	)
@@ -81,12 +82,37 @@ func _init_board() -> void:
 		var col := i % BOARD_COLS
 		var row := i / BOARD_COLS
 		var pos := Vector2(origin_x + col * CELL, origin_y + row * CELL)
-		var data := _random_ingredient()
 		var node := _INGREDIENT_SCENE.instantiate() as Ingredient
-		node.ingredient_data = data
+		node.ingredient_data = _random_ingredient()
 		node.position = pos
+		node.scale = Vector2(SPRITE_SCALE, SPRITE_SCALE)
 		node.tapped.connect(_on_ingredient_tapped)
 		$Ingredients.add_child(node)
+
+	# Guarantee at least one recipe is satisfiable from the starting board.
+	var ok := false
+	var rerolls := 0
+	for attempt in range(20):
+		var free: Dictionary = {}
+		for child in $Ingredients.get_children():
+			var slot := child as Ingredient
+			if slot and not slot.selected:
+				free[slot.ingredient_data.id] = free.get(slot.ingredient_data.id, 0) + 1
+		for recipe in level_config.recipe_pool:
+			if _is_recipe_satisfiable(recipe, free):
+				ok = true
+				break
+		if ok:
+			break
+		rerolls += 1
+		for child in $Ingredients.get_children():
+			var slot := child as Ingredient
+			if slot:
+				slot.refill(_random_ingredient())
+	if rerolls > 0:
+		print("[Board] Initial: needed %d re-roll(s) to satisfy a recipe" % rerolls)
+	if not ok:
+		push_warning("[Board] Initial: no satisfiable recipe after 20 attempts; accepting board")
 
 func _random_ingredient() -> IngredientData:
 	return _eligible_ingredients[randi() % _eligible_ingredients.size()]
@@ -104,11 +130,22 @@ func _on_ingredient_tapped(slot: Ingredient) -> void:
 func _on_order_completed_cb(order: Order) -> void:
 	_hud.remove_card(order)
 
-	# Refill every slot consumed by this order with a fresh random ingredient.
-	for slot in order.get_consumed_slots():
-		var new_data := _random_ingredient()
-		print("[Refill] slot was %s -> now %s" % [slot.ingredient_data.id, new_data.id])
-		slot.refill(new_data)
+	# Refill consumed slots, retrying until at least one remaining active order
+	# is satisfiable from the new board (up to 20 attempts).
+	var consumed := order.get_consumed_slots()
+	var satisfied := false
+	var rerolls := 0
+	for attempt in range(20):
+		for slot in consumed:
+			slot.refill(_random_ingredient())
+		if _order_manager.any_active_order_satisfiable():
+			satisfied = true
+			break
+		rerolls += 1
+	if rerolls > 0:
+		print("[Board] Refill: needed %d re-roll(s) to satisfy an active order" % rerolls)
+	if not satisfied:
+		push_warning("[Board] Refill: no satisfiable order after 20 attempts; accepting board")
 
 	# Spawn the next order if the level still has outstanding orders.
 	if _order_manager.needs_next_order():
