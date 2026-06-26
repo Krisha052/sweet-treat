@@ -3,10 +3,27 @@
 [ext_resource type="Script" uid="uid://dwdyuov0gyjj7" path="res://scripts/gameplay/level_controller.gd" id="1_base"]
 [ext_resource type="PackedScene" uid="uid://c100000000007" path="res://scenes/gameplay/order_manager.tscn" id="2_base"]
 [ext_resource type="PackedScene" uid="uid://c100000000004" path="res://scenes/ui/hud.tscn" id="3_base"]
-[ext_resource type="PackedScene" path="res://scenes/ui/result_overlay.tscn" id="6_base"]
+[ext_resource type="Texture2D" path="res://assets/textures/backgrounds/choppingBoard.png" id="4_base"]
 
 [node name="LevelBase" type="Node2D"]
 script = ExtResource("1_base")
+
+[node name="BackgroundLayer" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="Background" type="ColorRect" parent="BackgroundLayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.329, 0.271, 0.255, 1)
+
+[node name="ChoppingBoard" type="TextureRect" parent="BackgroundLayer"]
+anchor_left = 0.0
+anchor_top = 0.12
+anchor_right = 1.0
+anchor_bottom = 0.82
+expand_mode = 1
+stretch_mode = 5
+texture = ExtResource("4_base")
 
 [node name="Timer" type="Timer" parent="."]
 
@@ -15,8 +32,6 @@ script = ExtResource("1_base")
 [node name="HUD" parent="." instance=ExtResource("3_base")]
 
 [node name="Ingredients" type="Node2D" parent="."]
-
-[node name="ResultOverlay" parent="." instance=ExtResource("6_base")]
 
 [connection signal="all_orders_cleared" from="OrderManager" to="." method="on_all_orders_cleared"]
 [connection signal="time_updated" from="." to="HUD" method="update_timer"]

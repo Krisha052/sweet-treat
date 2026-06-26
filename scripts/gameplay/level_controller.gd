@@ -5,6 +5,7 @@ signal time_updated(seconds_left: float)
 @onready var _timer: Timer = $Timer
 @onready var _order_manager: OrderManager = $OrderManager
 @onready var _hud = $HUD
+@onready var _bg: ColorRect = $BackgroundLayer/Background
 
 const _INGREDIENT_SCENE := preload("res://scenes/gameplay/ingredient.tscn")
 const BOARD_COLS := 4
@@ -23,6 +24,7 @@ func _ready() -> void:
 
 	level_config = config
 	GameManager.start_level(config)
+	_hud.set_level(config.level_id)
 
 	_build_eligible_set(config)
 	_init_board()
@@ -158,7 +160,15 @@ func _on_tick() -> void:
 	if _time_remaining <= 0.0:
 		_timer.stop()
 		GameManager.set_fail()
+		get_tree().call_deferred("change_scene_to_file", "res://scenes/ui/game_over_screen.tscn")
 
 func on_all_orders_cleared() -> void:
 	_timer.stop()
 	GameManager.set_win()
+	_begin_win_sequence()
+
+func _begin_win_sequence() -> void:
+	_bg.color = Color("#8a8f13")
+	await get_tree().create_timer(3.0).timeout
+	# TODO: show interstitial ad here
+	get_tree().call_deferred("change_scene_to_file", "res://scenes/ui/next_level_screen.tscn")
