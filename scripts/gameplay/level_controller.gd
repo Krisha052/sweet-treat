@@ -29,6 +29,7 @@ func _ready() -> void:
 	_build_eligible_set(config)
 	_init_board()
 
+	_order_manager.board_node = $Ingredients
 	_order_manager.order_spawned.connect(_hud.add_card)
 	_order_manager.order_completed.connect(_on_order_completed_cb)
 	_order_manager.setup(config)

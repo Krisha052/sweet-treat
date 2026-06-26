@@ -7,6 +7,7 @@ signal all_orders_cleared
 
 @export var level_config: LevelConfig
 
+var board_node: Node2D  # set by level_controller after board init
 var _active_orders: Array[Order] = []
 var _total_orders: int = 0
 var _completed_count: int = 0
@@ -24,9 +25,45 @@ func spawn_order(recipe: RecipeData) -> void:
 	order_spawned.emit(order)
 
 func on_ingredient_tapped(slot: Ingredient) -> void:
+	var tapped_id := slot.ingredient_data.id
+
+	# Orders that still need the tapped ingredient type (oldest first).
+	var candidates: Array[Order] = []
 	for order in _active_orders:
-		if not order.is_complete() and order.collect(slot):
+		if not order.is_complete() and tapped_id in order.get_remaining_needs():
+			candidates.append(order)
+
+	if candidates.is_empty():
+		return
+
+	# Snapshot of free (unselected) board counts — tapped slot is still unselected here.
+	var free := _free_board_counts()
+
+	# Prefer the oldest order that the current board can fully satisfy.
+	for order in candidates:
+		if _is_completable(order, free):
+			order.collect(slot)
 			return
+
+	# Fallback: oldest-first FIFO so taps are never silently dropped.
+	candidates[0].collect(slot)
+
+func _free_board_counts() -> Dictionary:
+	var counts: Dictionary = {}
+	if not board_node:
+		return counts
+	for child in board_node.get_children():
+		var ing := child as Ingredient
+		if ing and not ing.selected:
+			counts[ing.ingredient_data.id] = counts.get(ing.ingredient_data.id, 0) + 1
+	return counts
+
+func _is_completable(order: Order, free: Dictionary) -> bool:
+	var remaining := order.get_remaining_needs()
+	for type_id: String in remaining:
+		if free.get(type_id, 0) < remaining[type_id]:
+			return false
+	return true
 
 func try_deselect(slot: Ingredient) -> void:
 	for order in _active_orders:

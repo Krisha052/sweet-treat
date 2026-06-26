@@ -34,6 +34,18 @@ func uncollect(slot: Ingredient) -> bool:
 func get_consumed_slots() -> Array[Ingredient]:
 	return _collected_slots
 
+# Returns {ingredient_id: remaining_count} for every type still needed.
+func get_remaining_needs() -> Dictionary:
+	var result: Dictionary = {}
+	for ing: IngredientData in recipe_data.ingredients:
+		result[ing.id] = result.get(ing.id, 0) + 1
+	for slot in _collected_slots:
+		var id := slot.ingredient_data.id
+		result[id] = result.get(id, 0) - 1
+		if result[id] <= 0:
+			result.erase(id)
+	return result
+
 func is_complete() -> bool:
 	for ingredient in recipe_data.ingredients:
 		if _collected_count(ingredient.id) < _needed_count(ingredient.id):
