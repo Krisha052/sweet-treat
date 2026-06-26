@@ -3,7 +3,11 @@ extends CanvasLayer
 @export var receipt_scene: PackedScene
 
 @onready var _timer_label: Label = $TimerLabel
+@onready var _level_label: Label = $LevelLabel
 @onready var _receipt_container: VBoxContainer = $ReceiptContainer
+
+func set_level(level_id: int) -> void:
+	_level_label.text = "Lv. %d" % (level_id + 1)
 
 func update_timer(seconds_left: float) -> void:
 	_timer_label.text = "%d" % ceili(seconds_left)
