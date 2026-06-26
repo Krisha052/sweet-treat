@@ -32,6 +32,8 @@ func remove_card(order: Order) -> void:
 func _on_card_pressed(order: Order) -> void:
 	if not recipe_frame_scene:
 		return
+	_card_row.visible = false
 	var frame: Node = recipe_frame_scene.instantiate()
+	frame.tree_exiting.connect(func(): _card_row.visible = true)
 	get_parent().add_child(frame)
 	frame.open(order)
