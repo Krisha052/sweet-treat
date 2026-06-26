@@ -1,6 +1,7 @@
-[gd_resource type="Resource" load_steps=5 format=3]
+[gd_resource type="Resource" load_steps=6 format=3]
 
 [ext_resource type="Script" path="res://scripts/resources/recipe_data.gd" id="1_bun"]
+[ext_resource type="Texture2D" path="res://assets/textures/dishes/Bun.png" id="9_bun"]
 [ext_resource type="Resource" path="res://data/ingredients/flour.tres" id="2_bun"]
 [ext_resource type="Resource" path="res://data/ingredients/milk.tres" id="3_bun"]
 [ext_resource type="Resource" path="res://data/ingredients/egg.tres" id="4_bun"]
@@ -9,4 +10,5 @@
 script = ExtResource("1_bun")
 id = "bun"
 display_name = "Bun"
+icon = ExtResource("9_bun")
 ingredients = Array[IngredientData]([ExtResource("2_bun"), ExtResource("2_bun"), ExtResource("3_bun"), ExtResource("4_bun")])

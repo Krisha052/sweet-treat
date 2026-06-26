@@ -1,6 +1,7 @@
-[gd_resource type="Resource" load_steps=5 format=3]
+[gd_resource type="Resource" load_steps=6 format=3]
 
 [ext_resource type="Script" path="res://scripts/resources/recipe_data.gd" id="1_lat"]
+[ext_resource type="Texture2D" path="res://assets/textures/dishes/Latte.png" id="9_lat"]
 [ext_resource type="Resource" path="res://data/ingredients/bean_raw.tres" id="2_lat"]
 [ext_resource type="Resource" path="res://data/ingredients/bean_light_roast.tres" id="3_lat"]
 [ext_resource type="Resource" path="res://data/ingredients/milk.tres" id="4_lat"]
@@ -9,4 +10,5 @@
 script = ExtResource("1_lat")
 id = "latte"
 display_name = "Latte"
+icon = ExtResource("9_lat")
 ingredients = Array[IngredientData]([ExtResource("2_lat"), ExtResource("3_lat"), ExtResource("3_lat"), ExtResource("4_lat")])

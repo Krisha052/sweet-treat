@@ -1,6 +1,7 @@
-[gd_resource type="Resource" load_steps=5 format=3]
+[gd_resource type="Resource" load_steps=6 format=3]
 
 [ext_resource type="Script" path="res://scripts/resources/recipe_data.gd" id="1_cro"]
+[ext_resource type="Texture2D" path="res://assets/textures/dishes/Croissant.png" id="9_cro"]
 [ext_resource type="Resource" path="res://data/ingredients/flour.tres" id="2_cro"]
 [ext_resource type="Resource" path="res://data/ingredients/milk.tres" id="3_cro"]
 [ext_resource type="Resource" path="res://data/ingredients/egg.tres" id="4_cro"]
@@ -9,4 +10,5 @@
 script = ExtResource("1_cro")
 id = "croissant"
 display_name = "Croissant"
+icon = ExtResource("9_cro")
 ingredients = Array[IngredientData]([ExtResource("2_cro"), ExtResource("3_cro"), ExtResource("3_cro"), ExtResource("4_cro")])
