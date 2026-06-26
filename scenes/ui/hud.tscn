@@ -13,26 +13,26 @@ recipe_frame_scene = ExtResource("3_hud")
 [node name="LevelLabel" type="Label" parent="."]
 offset_left = 12.0
 offset_top = 10.0
-offset_right = 190.0
-offset_bottom = 58.0
+offset_right = 260.0
+offset_bottom = 72.0
 theme_override_fonts/font = ExtResource("4_hud")
-theme_override_font_sizes/font_size = 38
+theme_override_font_sizes/font_size = 50
 theme_override_colors/font_color = Color(0.867, 0.671, 0.475, 1)
 
 [node name="TimerLabel" type="Label" parent="."]
-offset_left = -190.0
+offset_left = -220.0
 offset_top = 10.0
 offset_right = -10.0
-offset_bottom = 58.0
+offset_bottom = 72.0
 anchor_left = 1.0
 anchor_right = 1.0
 horizontal_alignment = 2
 theme_override_fonts/font = ExtResource("4_hud")
-theme_override_font_sizes/font_size = 38
+theme_override_font_sizes/font_size = 50
 theme_override_colors/font_color = Color(0.867, 0.671, 0.475, 1)
 
 [node name="DishCardRow" type="HFlowContainer" parent="."]
-anchor_top = 0.84
+anchor_top = 0.74
 anchor_right = 1.0
-anchor_bottom = 1.0
+anchor_bottom = 0.90
 alignment = 1

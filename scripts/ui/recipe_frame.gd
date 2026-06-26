@@ -33,9 +33,9 @@ func _build_list(recipe: RecipeData) -> void:
 		var label := Label.new()
 		label.text = "x%d" % entry["count"]
 		label.add_theme_font_override("font", _QUAVER)
-		label.add_theme_font_size_override("font_size", 44)
+		label.add_theme_font_size_override("font_size", 56)
 		label.add_theme_color_override("font_color", Color("#3d2b1f"))
-		label.custom_minimum_size = Vector2(100, 0)
+		label.custom_minimum_size = Vector2(120, 0)
 		label.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 		label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 		row.add_child(label)
