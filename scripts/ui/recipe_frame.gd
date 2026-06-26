@@ -28,22 +28,28 @@ func _build_list(recipe: RecipeData) -> void:
 	for id in order_ids:
 		var entry = seen[id]
 		var row := HBoxContainer.new()
-		row.add_theme_constant_override("separation", 24)
+		row.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 
 		var label := Label.new()
 		label.text = "x%d" % entry["count"]
 		label.add_theme_font_override("font", _QUAVER)
-		label.add_theme_font_size_override("font_size", 38)
+		label.add_theme_font_size_override("font_size", 44)
 		label.add_theme_color_override("font_color", Color("#3d2b1f"))
-		label.custom_minimum_size = Vector2(90, 0)
+		label.custom_minimum_size = Vector2(100, 0)
+		label.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 		label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 		row.add_child(label)
 
+		var spacer := Control.new()
+		spacer.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		row.add_child(spacer)
+
 		var icon := TextureRect.new()
 		icon.texture = entry["data"].icon
-		icon.custom_minimum_size = Vector2(88, 88)
+		icon.custom_minimum_size = Vector2(130, 130)
 		icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		icon.size_flags_horizontal = Control.SIZE_SHRINK_END
 		row.add_child(icon)
 
 		list.add_child(row)
