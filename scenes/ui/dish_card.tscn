@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" path="res://assets/textures/backgrounds/recipts_card.png" id="2_dc"]
 
 [node name="DishCard" type="TextureButton"]
-custom_minimum_size = Vector2(220, 220)
+custom_minimum_size = Vector2(270, 270)
 ignore_texture_size = true
 stretch_mode = 0
 texture_normal = ExtResource("2_dc")

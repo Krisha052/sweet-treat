@@ -69,7 +69,7 @@ func _init_board() -> void:
 	var row_w := BOARD_COLS * CELL
 	var origin_x := (vp.x - row_w) * 0.5 + CELL * 0.5
 	var origin_y := clampf(
-		vp.y * 0.40,
+		vp.y * 0.37,
 		CELL * 0.5 + 10.0,
 		vp.y - BOARD_ROWS * CELL + CELL * 0.5 - 10.0
 	)
