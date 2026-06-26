@@ -15,6 +15,14 @@ func set_level(level_id: int) -> void:
 func update_timer(seconds_left: float) -> void:
 	_timer_label.text = "%d" % ceili(seconds_left)
 
+func position_card_row(board_bottom_px: float) -> void:
+	var vp_h := get_viewport().get_visible_rect().size.y
+	var top_y := board_bottom_px + 20.0
+	_card_row.anchor_top = top_y / vp_h
+	_card_row.anchor_bottom = (top_y + 300.0) / vp_h
+	_card_row.offset_top = 0.0
+	_card_row.offset_bottom = 0.0
+
 func add_card(order: Order) -> void:
 	if not dish_card_scene:
 		return

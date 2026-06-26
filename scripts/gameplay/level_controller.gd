@@ -70,7 +70,7 @@ func _init_board() -> void:
 	var row_w := BOARD_COLS * CELL
 	var origin_x := (vp.x - row_w) * 0.5 + CELL * 0.5
 	var origin_y := clampf(
-		vp.y * 0.306,
+		vp.y * 0.26,
 		CELL * 0.5 + 10.0,
 		vp.y - BOARD_ROWS * CELL + CELL * 0.5 - 10.0
 	)
@@ -113,6 +113,9 @@ func _init_board() -> void:
 		print("[Board] Initial: needed %d re-roll(s) to satisfy a recipe" % rerolls)
 	if not ok:
 		push_warning("[Board] Initial: no satisfiable recipe after 20 attempts; accepting board")
+
+	var board_bottom := origin_y + (BOARD_ROWS - 1) * CELL + CELL * 0.5
+	_hud.position_card_row(board_bottom)
 
 func _random_ingredient() -> IngredientData:
 	return _eligible_ingredients[randi() % _eligible_ingredients.size()]
