@@ -29,7 +29,7 @@ func _ready() -> void:
 	_build_eligible_set(config)
 	_init_board()
 
-	_order_manager.order_spawned.connect(_hud.add_receipt)
+	_order_manager.order_spawned.connect(_hud.add_card)
 	_order_manager.order_completed.connect(_on_order_completed_cb)
 	_order_manager.setup(config)
 
@@ -101,7 +101,7 @@ func _on_ingredient_tapped(slot: Ingredient) -> void:
 # --- Order completion + board refill ---
 
 func _on_order_completed_cb(order: Order) -> void:
-	_hud.remove_receipt(order)
+	_hud.remove_card(order)
 
 	# Refill every slot consumed by this order with a fresh random ingredient.
 	for slot in order.get_consumed_slots():

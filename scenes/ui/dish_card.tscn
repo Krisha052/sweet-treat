@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/dish_card.gd" id="1_dc"]
+[ext_resource type="Texture2D" path="res://assets/textures/backgrounds/recipts_card.png" id="2_dc"]
+
+[node name="DishCard" type="TextureButton"]
+custom_minimum_size = Vector2(220, 220)
+ignore_texture_size = true
+stretch_mode = 0
+texture_normal = ExtResource("2_dc")
+script = ExtResource("1_dc")
+
+[node name="DishIcon" type="TextureRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 28.0
+offset_top = 28.0
+offset_right = -28.0
+offset_bottom = -28.0
+expand_mode = 1
+stretch_mode = 5
