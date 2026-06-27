@@ -8,8 +8,8 @@ signal time_updated(seconds_left: float)
 @onready var _bg: ColorRect = $BackgroundLayer/Background
 
 const _INGREDIENT_SCENE := preload("res://scenes/gameplay/ingredient.tscn")
-const BOARD_COLS := 5
-const BOARD_ROWS := 5
+const BOARD_COLS := 6
+const BOARD_ROWS := 6
 
 var level_config: LevelConfig
 var _time_remaining: float = 0.0
@@ -65,8 +65,8 @@ func _build_eligible_set(config: LevelConfig) -> void:
 
 func _init_board() -> void:
 	var vp := get_viewport().get_visible_rect().size
-	const CELL := 150.0
-	const SPRITE_SCALE := 0.8
+	const CELL := 125.0
+	const SPRITE_SCALE := 0.7
 	var row_w := BOARD_COLS * CELL
 	var origin_x := (vp.x - row_w) * 0.5 + CELL * 0.5
 	var origin_y := clampf(

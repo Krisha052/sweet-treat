@@ -10,5 +10,5 @@
 script = ExtResource("1_lv8")
 level_id = 7
 time_limit_seconds = 45.0
-max_simultaneous_orders = 3
+max_simultaneous_orders = 5
 recipe_pool = Array[RecipeData]([ExtResource("2_lv8"), ExtResource("3_lv8"), ExtResource("4_lv8"), ExtResource("5_lv8")])
