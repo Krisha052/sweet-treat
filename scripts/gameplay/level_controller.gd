@@ -315,4 +315,8 @@ func _begin_win_sequence() -> void:
 	_bg.color = Color("#8a8f13")
 	await get_tree().create_timer(3.0).timeout
 	# TODO: show interstitial ad here
-	get_tree().call_deferred("change_scene_to_file", "res://scenes/ui/next_level_screen.tscn")
+	var next_path := "res://data/levels/level_%02d.tres" % (GameManager.current_level_id + 2)
+	if ResourceLoader.exists(next_path):
+		get_tree().call_deferred("change_scene_to_file", "res://scenes/ui/next_level_screen.tscn")
+	else:
+		get_tree().call_deferred("change_scene_to_file", "res://scenes/ui/game_complete_screen.tscn")

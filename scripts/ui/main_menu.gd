@@ -1,5 +1,7 @@
 extends Control
 
+const MAX_LEVEL_INDEX := 7  # level_08 is the last (0-based)
+
 func _ready() -> void:
 	$StartButton.pressed.connect(_on_start_pressed)
 	_pulse_start_button()
@@ -11,6 +13,9 @@ func _pulse_start_button() -> void:
 
 func _on_start_pressed() -> void:
 	var level_index := SaveManager.get_unlocked_level_index()
+	if level_index > MAX_LEVEL_INDEX:
+		get_tree().call_deferred("change_scene_to_file", "res://scenes/ui/game_complete_screen.tscn")
+		return
 	var path := "res://data/levels/level_%02d.tres" % (level_index + 1)
 	var config: LevelConfig = load(path)
 	if not config:
