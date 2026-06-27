@@ -213,23 +213,19 @@ func _apply_force_placement(deficit: Dictionary, priority_slots: Array) -> bool:
 # --- Tap routing ---
 
 func _on_ingredient_tapped(slot: Ingredient) -> void:
-	if slot.selected:
-		_order_manager.try_deselect(slot)
-	else:
-		_order_manager.on_ingredient_tapped(slot)
+	_order_manager.toggle_ingredient(slot)
 
 # --- Order completion + board refill ---
 
-func _on_order_completed_cb(order: Order) -> void:
+func _on_order_completed_cb(order: Order, consumed_slots: Array[Ingredient]) -> void:
 	_hud.remove_card(order)
 
 	# Refill consumed slots, retrying until at least one remaining active order
-	# is satisfiable from the new board (up to 20 attempts).
-	var consumed := order.get_consumed_slots()
+	# is satisfiable from the new board + selected pool (up to 20 attempts).
 	var satisfied := false
 	var rerolls := 0
 	for attempt in range(20):
-		for slot in consumed:
+		for slot in consumed_slots:
 			slot.refill(_random_ingredient())
 		if _order_manager.any_active_order_satisfiable():
 			satisfied = true
@@ -242,7 +238,7 @@ func _on_order_completed_cb(order: Order) -> void:
 		var free := _board_free_counts()
 		var deficit := _order_manager.get_force_deficit(free)
 		if not deficit.is_empty():
-			if not _apply_force_placement(deficit, consumed):
+			if not _apply_force_placement(deficit, consumed_slots):
 				push_warning("[Board] Refill: force-placement failed — no eligible slots")
 
 	# Spawn the next order if the level still has outstanding orders.
