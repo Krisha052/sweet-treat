@@ -66,7 +66,7 @@ func _build_eligible_set(config: LevelConfig) -> void:
 func _init_board() -> void:
 	var vp := get_viewport().get_visible_rect().size
 	const CELL := 125.0
-	const SPRITE_SCALE := 0.7
+	const SPRITE_SCALE := 0.74
 	var row_w := BOARD_COLS * CELL
 	var origin_x := (vp.x - row_w) * 0.5 + CELL * 0.5
 	var origin_y := clampf(
