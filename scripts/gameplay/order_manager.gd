@@ -99,8 +99,8 @@ func get_force_deficit(free_counts: Dictionary) -> Dictionary:
 			var d: int = needs[type_id] - avail
 			if d > 0:
 				deficit[type_id] = d
-		var total := 0
-		for v in deficit.values():
+		var total: int = 0
+		for v: int in deficit.values():
 			total += v
 		if best_total < 0 or total < best_total:
 			best_total = total

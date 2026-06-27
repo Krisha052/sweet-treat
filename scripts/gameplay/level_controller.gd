@@ -155,8 +155,8 @@ func _min_deficit_for_pool(free_counts: Dictionary) -> Dictionary:
 			var d: int = needed[type_id] - free_counts.get(type_id, 0)
 			if d > 0:
 				deficit[type_id] = d
-		var total := 0
-		for v in deficit.values():
+		var total: int = 0
+		for v: int in deficit.values():
 			total += v
 		if best_total < 0 or total < best_total:
 			best_total = total
@@ -170,8 +170,8 @@ func _min_deficit_for_pool(free_counts: Dictionary) -> Dictionary:
 func _apply_force_placement(deficit: Dictionary, priority_slots: Array) -> bool:
 	if deficit.is_empty():
 		return true
-	var total_needed := 0
-	for v in deficit.values():
+	var total_needed: int = 0
+	for v: int in deficit.values():
 		total_needed += v
 
 	# Priority candidates (consumed/re-rolled slots — already deselected by refill()).
@@ -182,7 +182,7 @@ func _apply_force_placement(deficit: Dictionary, priority_slots: Array) -> bool:
 			candidates.append(slot)
 
 	# Spill candidates: non-priority, non-selected board slots.
-	var spill_needed := max(0, total_needed - candidates.size())
+	var spill_needed: int = max(0, total_needed - candidates.size())
 	var spill_pool: Array[Ingredient] = []
 	for child in $Ingredients.get_children():
 		var slot := child as Ingredient
@@ -264,7 +264,7 @@ func _pick_next_recipe() -> RecipeData:
 	var committed := _order_manager.get_committed_demand()
 	var available: Dictionary = {}
 	for type_id in free_counts:
-		var remaining := free_counts[type_id] - committed.get(type_id, 0)
+		var remaining: int = free_counts[type_id] - committed.get(type_id, 0)
 		if remaining > 0:
 			available[type_id] = remaining
 
