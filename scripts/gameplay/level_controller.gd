@@ -112,13 +112,102 @@ func _init_board() -> void:
 	if rerolls > 0:
 		print("[Board] Initial: needed %d re-roll(s) to satisfy a recipe" % rerolls)
 	if not ok:
-		push_warning("[Board] Initial: no satisfiable recipe after 20 attempts; accepting board")
+		push_warning("[Board] Initial: no satisfiable recipe after 20 attempts; force-placing")
+		var free := _board_free_counts()
+		var deficit := _min_deficit_for_pool(free)
+		if not deficit.is_empty():
+			if not _apply_force_placement(deficit, []):
+				push_warning("[Board] Initial: force-placement failed — no eligible slots")
 
 	var board_bottom := origin_y + (BOARD_ROWS - 1) * CELL + CELL * 0.5
 	_hud.position_card_row(board_bottom)
 
 func _random_ingredient() -> IngredientData:
 	return _eligible_ingredients[randi() % _eligible_ingredients.size()]
+
+func _find_ingredient_data(type_id: String) -> IngredientData:
+	for d in _eligible_ingredients:
+		if d.id == type_id:
+			return d
+	return null
+
+func _board_free_counts() -> Dictionary:
+	var counts: Dictionary = {}
+	for child in $Ingredients.get_children():
+		var slot := child as Ingredient
+		if slot and not slot.selected:
+			counts[slot.ingredient_data.id] = counts.get(slot.ingredient_data.id, 0) + 1
+	return counts
+
+# Returns the smallest-deficit {type_id: count} needed to make any recipe in the
+# pool satisfiable from free_counts. Used at the initial board site where no
+# active orders exist yet.
+func _min_deficit_for_pool(free_counts: Dictionary) -> Dictionary:
+	var best_deficit: Dictionary = {}
+	var best_total := -1
+	for recipe in level_config.recipe_pool:
+		var needed: Dictionary = {}
+		for ing: IngredientData in recipe.ingredients:
+			needed[ing.id] = needed.get(ing.id, 0) + 1
+		var deficit: Dictionary = {}
+		for type_id in needed:
+			var d := needed[type_id] - free_counts.get(type_id, 0)
+			if d > 0:
+				deficit[type_id] = d
+		var total := 0
+		for v in deficit.values():
+			total += v
+		if best_total < 0 or total < best_total:
+			best_total = total
+			best_deficit = deficit
+	return best_deficit
+
+# Overwrites the minimum set of board slots to cover deficit.
+# Prefers priority_slots (already re-rolled this cycle); spills to other
+# non-selected slots only if needed. Returns false and touches nothing if
+# there are not enough eligible slots to cover the full deficit.
+func _apply_force_placement(deficit: Dictionary, priority_slots: Array) -> bool:
+	if deficit.is_empty():
+		return true
+	var total_needed := 0
+	for v in deficit.values():
+		total_needed += v
+
+	# Priority candidates (consumed/re-rolled slots — already deselected by refill()).
+	var candidates: Array[Ingredient] = []
+	for s in priority_slots:
+		var slot := s as Ingredient
+		if slot:
+			candidates.append(slot)
+
+	# Spill candidates: non-priority, non-selected board slots.
+	var spill_needed := max(0, total_needed - candidates.size())
+	var spill_pool: Array[Ingredient] = []
+	for child in $Ingredients.get_children():
+		var slot := child as Ingredient
+		if slot and not (slot in priority_slots) and not slot.selected:
+			spill_pool.append(slot)
+
+	if spill_pool.size() < spill_needed:
+		return false  # not enough eligible slots — no partial placement
+
+	for slot in spill_pool:
+		if candidates.size() >= total_needed:
+			break
+		candidates.append(slot)
+
+	var remaining := deficit.duplicate()
+	for slot in candidates:
+		if remaining.is_empty():
+			break
+		var type_id: String = remaining.keys()[0]
+		var ing := _find_ingredient_data(type_id)
+		if ing:
+			slot.refill(ing)
+			remaining[type_id] -= 1
+			if remaining[type_id] <= 0:
+				remaining.erase(type_id)
+	return remaining.is_empty()
 
 # --- Tap routing ---
 
@@ -148,7 +237,12 @@ func _on_order_completed_cb(order: Order) -> void:
 	if rerolls > 0:
 		print("[Board] Refill: needed %d re-roll(s) to satisfy an active order" % rerolls)
 	if not satisfied:
-		push_warning("[Board] Refill: no satisfiable order after 20 attempts; accepting board")
+		push_warning("[Board] Refill: no satisfiable order after 20 attempts; force-placing")
+		var free := _board_free_counts()
+		var deficit := _order_manager.get_force_deficit(free)
+		if not deficit.is_empty():
+			if not _apply_force_placement(deficit, consumed):
+				push_warning("[Board] Refill: force-placement failed — no eligible slots")
 
 	# Spawn the next order if the level still has outstanding orders.
 	if _order_manager.needs_next_order():

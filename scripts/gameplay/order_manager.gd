@@ -81,6 +81,32 @@ func get_committed_demand() -> Dictionary:
 			demand[type_id] = demand.get(type_id, 0) + order.get_remaining_needs()[type_id]
 	return demand
 
+# Returns {type_id: count} — the deficit needed to make the cheapest active order
+# completable from free_counts, deducting other orders' committed demand.
+# Returns {} if no active orders or no deficit exists.
+func get_force_deficit(free_counts: Dictionary) -> Dictionary:
+	if _active_orders.is_empty():
+		return {}
+	var total_committed := get_committed_demand()
+	var best_deficit: Dictionary = {}
+	var best_total := -1
+	for order in _active_orders:
+		var needs := order.get_remaining_needs()
+		var deficit: Dictionary = {}
+		for type_id in needs:
+			var others := total_committed.get(type_id, 0) - needs.get(type_id, 0)
+			var avail := max(0, free_counts.get(type_id, 0) - max(0, others))
+			var d := needs[type_id] - avail
+			if d > 0:
+				deficit[type_id] = d
+		var total := 0
+		for v in deficit.values():
+			total += v
+		if best_total < 0 or total < best_total:
+			best_total = total
+			best_deficit = deficit
+	return best_deficit
+
 func try_deselect(slot: Ingredient) -> void:
 	for order in _active_orders:
 		if order.uncollect(slot):
