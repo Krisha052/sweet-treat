@@ -27,3 +27,14 @@ func get_unlocked_level_index() -> int:
 
 func is_level_unlocked(level_index: int) -> bool:
 	return level_index <= _unlocked_level_index
+
+func _unhandled_key_input(event: InputEvent) -> void:
+	if not OS.has_feature("debug"):
+		return
+	var key := event as InputEventKey
+	if key and key.pressed and not key.echo \
+			and key.ctrl_pressed and key.shift_pressed \
+			and key.keycode == KEY_R:
+		_unlocked_level_index = 0
+		_save()
+		get_tree().change_scene_to_file("res://scenes/ui/main_menu.tscn")
