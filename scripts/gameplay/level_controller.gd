@@ -70,7 +70,7 @@ func _init_board() -> void:
 	var row_w := BOARD_COLS * CELL
 	var origin_x := (vp.x - row_w) * 0.5 + CELL * 0.5
 	var origin_y := clampf(
-		vp.y * 0.26,
+		vp.y * 0.22,
 		CELL * 0.5 + 10.0,
 		vp.y - BOARD_ROWS * CELL + CELL * 0.5 - 10.0
 	)
@@ -86,6 +86,7 @@ func _init_board() -> void:
 		node.ingredient_data = _random_ingredient()
 		node.position = pos
 		node.scale = Vector2(SPRITE_SCALE, SPRITE_SCALE)
+		node.get_node("Sprite2D").scale = Vector2(0.875, 0.875)
 		node.tapped.connect(_on_ingredient_tapped)
 		$Ingredients.add_child(node)
 

@@ -17,7 +17,7 @@ func update_timer(seconds_left: float) -> void:
 
 func position_card_row(board_bottom_px: float) -> void:
 	var vp_h := get_viewport().get_visible_rect().size.y
-	var top_y := board_bottom_px + 20.0
+	var top_y := board_bottom_px + 50.0
 	_card_row.anchor_top = top_y / vp_h
 	_card_row.anchor_bottom = (top_y + 300.0) / vp_h
 	_card_row.offset_top = 0.0
