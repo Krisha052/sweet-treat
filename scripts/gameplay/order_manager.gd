@@ -74,6 +74,13 @@ func any_active_order_satisfiable() -> bool:
 			return true
 	return false
 
+func get_committed_demand() -> Dictionary:
+	var demand: Dictionary = {}
+	for order in _active_orders:
+		for type_id in order.get_remaining_needs():
+			demand[type_id] = demand.get(type_id, 0) + order.get_remaining_needs()[type_id]
+	return demand
+
 func try_deselect(slot: Ingredient) -> void:
 	for order in _active_orders:
 		if order.uncollect(slot):

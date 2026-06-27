@@ -165,22 +165,30 @@ func _pick_next_recipe() -> RecipeData:
 			free_counts[slot.ingredient_data.id] = \
 				free_counts.get(slot.ingredient_data.id, 0) + 1
 
-	# Find all recipes the current free board can satisfy.
+	# Deduct what active orders already need so we don't double-book resources.
+	var committed := _order_manager.get_committed_demand()
+	var available: Dictionary = {}
+	for type_id in free_counts:
+		var remaining := free_counts[type_id] - committed.get(type_id, 0)
+		if remaining > 0:
+			available[type_id] = remaining
+
+	# Find all recipes the uncommitted board can still satisfy.
 	var satisfiable: Array[RecipeData] = []
 	for recipe in level_config.recipe_pool:
-		if _is_recipe_satisfiable(recipe, free_counts):
+		if _is_recipe_satisfiable(recipe, available):
 			satisfiable.append(recipe)
 
 	if satisfiable.is_empty():
 		var fallback: RecipeData = level_config.recipe_pool[randi() % level_config.recipe_pool.size()]
-		print("[BoardMatch] No satisfiable recipe — random fallback: %s" % fallback.display_name)
+		print("[BoardMatch] No recipe fits uncommitted board — random fallback: %s" % fallback.display_name)
 		return fallback
 
 	var chosen: RecipeData = satisfiable[randi() % satisfiable.size()]
 	var names: PackedStringArray = []
 	for r in satisfiable:
 		names.append(r.display_name)
-	print("[BoardMatch] %d satisfiable: [%s] -> chose: %s" % [
+	print("[BoardMatch] %d satisfiable on uncommitted board: [%s] -> chose: %s" % [
 		satisfiable.size(), ", ".join(names), chosen.display_name])
 	return chosen
 
