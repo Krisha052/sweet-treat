@@ -152,7 +152,7 @@ func _min_deficit_for_pool(free_counts: Dictionary) -> Dictionary:
 			needed[ing.id] = needed.get(ing.id, 0) + 1
 		var deficit: Dictionary = {}
 		for type_id in needed:
-			var d := needed[type_id] - free_counts.get(type_id, 0)
+			var d: int = needed[type_id] - free_counts.get(type_id, 0)
 			if d > 0:
 				deficit[type_id] = d
 		var total := 0

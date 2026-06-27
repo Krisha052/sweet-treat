@@ -94,9 +94,9 @@ func get_force_deficit(free_counts: Dictionary) -> Dictionary:
 		var needs := order.get_remaining_needs()
 		var deficit: Dictionary = {}
 		for type_id in needs:
-			var others := total_committed.get(type_id, 0) - needs.get(type_id, 0)
-			var avail := max(0, free_counts.get(type_id, 0) - max(0, others))
-			var d := needs[type_id] - avail
+			var others: int = total_committed.get(type_id, 0) - needs.get(type_id, 0)
+			var avail: int = max(0, free_counts.get(type_id, 0) - max(0, others))
+			var d: int = needs[type_id] - avail
 			if d > 0:
 				deficit[type_id] = d
 		var total := 0
