@@ -78,6 +78,24 @@ func _init_board() -> void:
 	print("Level %d: init %dx%d board, vp=(%.0f,%.0f), origin=(%.0f,%.0f)" % [
 		level_config.level_id, BOARD_COLS, BOARD_ROWS, vp.x, vp.y, origin_x, origin_y])
 
+	# Position ChoppingBoard so sprite edges sit exactly 75px inside the wood surface.
+	const VISUAL_RADIUS := 81.0 * SPRITE_SCALE * 0.875  # 52.45 px at runtime scale
+	const BOARD_MARGIN := 75.0
+	var sprite_top_edge := origin_y - VISUAL_RADIUS
+	var sprite_bot_edge := origin_y + (BOARD_ROWS - 1) * CELL + VISUAL_RADIUS
+	var chop_top := sprite_top_edge - BOARD_MARGIN
+	var wood_height := sprite_bot_edge - sprite_top_edge + 2.0 * BOARD_MARGIN
+	var bezel_height := wood_height * (24.0 / 234.0)
+	var chop_bottom := sprite_bot_edge + BOARD_MARGIN + bezel_height
+	var chop_board := $BackgroundLayer/ChoppingBoard as TextureRect
+	chop_board.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+	chop_board.anchor_top = 0.0
+	chop_board.anchor_bottom = 0.0
+	chop_board.offset_top = chop_top
+	chop_board.offset_bottom = chop_bottom
+	print("[Board] ChoppingBoard: top=%.1f bottom=%.1f top_margin=%.1f bot_margin=%.1f" % [
+		chop_top, chop_bottom, sprite_top_edge - chop_top, chop_top + wood_height - sprite_bot_edge])
+
 	for i in BOARD_COLS * BOARD_ROWS:
 		var col := i % BOARD_COLS
 		var row := i / BOARD_COLS
