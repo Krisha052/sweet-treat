@@ -8,8 +8,6 @@ signal time_updated(seconds_left: float)
 @onready var _bg: ColorRect = $BackgroundLayer/Background
 
 const _INGREDIENT_SCENE := preload("res://scenes/gameplay/ingredient.tscn")
-const BOARD_COLS := 6
-const BOARD_ROWS := 6
 
 var level_config: LevelConfig
 var _time_remaining: float = 0.0
@@ -65,24 +63,26 @@ func _build_eligible_set(config: LevelConfig) -> void:
 
 func _init_board() -> void:
 	var vp := get_viewport().get_visible_rect().size
+	var board_cols := level_config.board_cols
+	var board_rows := level_config.board_rows
 	const CELL := 125.0
 	const SPRITE_SCALE := 0.74
-	var row_w := BOARD_COLS * CELL
+	var row_w := board_cols * CELL
 	var origin_x := (vp.x - row_w) * 0.5 + CELL * 0.5
 	var origin_y := clampf(
 		vp.y * 0.22,
 		CELL * 0.5 + 10.0,
-		vp.y - BOARD_ROWS * CELL + CELL * 0.5 - 10.0
+		vp.y - board_rows * CELL + CELL * 0.5 - 10.0
 	)
 
 	print("Level %d: init %dx%d board, vp=(%.0f,%.0f), origin=(%.0f,%.0f)" % [
-		level_config.level_id, BOARD_COLS, BOARD_ROWS, vp.x, vp.y, origin_x, origin_y])
+		level_config.level_id, board_cols, board_rows, vp.x, vp.y, origin_x, origin_y])
 
 	# Position ChoppingBoard so sprite edges sit exactly 75px inside the wood surface.
 	const VISUAL_RADIUS := 81.0 * SPRITE_SCALE * 0.875  # 52.45 px at runtime scale
 	const BOARD_MARGIN := 75.0
 	var sprite_top_edge := origin_y - VISUAL_RADIUS
-	var sprite_bot_edge := origin_y + (BOARD_ROWS - 1) * CELL + VISUAL_RADIUS
+	var sprite_bot_edge := origin_y + (board_rows - 1) * CELL + VISUAL_RADIUS
 	var chop_top := sprite_top_edge - BOARD_MARGIN
 	var wood_height := sprite_bot_edge - sprite_top_edge + 2.0 * BOARD_MARGIN
 	var bezel_height := wood_height * (24.0 / 234.0)
@@ -93,12 +93,17 @@ func _init_board() -> void:
 	chop_board.anchor_bottom = 0.0
 	chop_board.offset_top = chop_top
 	chop_board.offset_bottom = chop_bottom
+	# 8-column grid spans x=[40,1040]; scene's 33/-33 offsets leave only 7px margins.
+	# Full-viewport rect (0/0) restores ~50px margins for the wider grid.
+	if board_cols > 6:
+		chop_board.offset_left = 0.0
+		chop_board.offset_right = 0.0
 	print("[Board] ChoppingBoard: top=%.1f bottom=%.1f top_margin=%.1f bot_margin=%.1f" % [
 		chop_top, chop_bottom, sprite_top_edge - chop_top, chop_top + wood_height - sprite_bot_edge])
 
-	for i in BOARD_COLS * BOARD_ROWS:
-		var col := i % BOARD_COLS
-		var row := i / BOARD_COLS
+	for i in board_cols * board_rows:
+		var col := i % board_cols
+		var row := i / board_cols
 		var pos := Vector2(origin_x + col * CELL, origin_y + row * CELL)
 		var node := _INGREDIENT_SCENE.instantiate() as Ingredient
 		node.ingredient_data = _random_ingredient()
@@ -138,7 +143,7 @@ func _init_board() -> void:
 			if not _apply_force_placement(deficit, []):
 				push_warning("[Board] Initial: force-placement failed — no eligible slots")
 
-	var board_bottom := origin_y + (BOARD_ROWS - 1) * CELL + CELL * 0.5
+	var board_bottom := origin_y + (board_rows - 1) * CELL + CELL * 0.5
 	_hud.position_card_row(board_bottom)
 
 func _random_ingredient() -> IngredientData:
