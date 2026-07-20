@@ -27,6 +27,10 @@ A cozy 2D cafe simulation built in **Godot 4.7**. Race the clock, tap ingredient
 
 See [`docs/Sweet_Treat_Design_Doc.md`](docs/Sweet_Treat_Design_Doc.md) for the full design doc, level-tier breakdown, and implementation status.
 
+## Beta testing
+
+The 8-level build is going through a beta test with community testers before further content work. Process and results: [`docs/beta_testing/BETA_TEST_PLAN.md`](docs/beta_testing/BETA_TEST_PLAN.md) · [`docs/beta_testing/BETA_RESULTS.md`](docs/beta_testing/BETA_RESULTS.md).
+
 ## Getting started
 
 1. Install [Godot 4.7](https://godotengine.org/download) (or `brew install --cask godot` on macOS).
