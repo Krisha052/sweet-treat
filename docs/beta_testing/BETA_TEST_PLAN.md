@@ -24,22 +24,28 @@ Validate that the current 8-level build (Phase 1–4 complete, see main [design 
 
 Chosen over Play Console internal testing because it requires no $25 developer account or store review — testers install directly from an email link, which fits a pre-launch friends/community beta group.
 
-**One-time setup (do before first release):**
-1. Install Godot's Android export templates (Editor → Manage Export Templates) and configure `Android` in Export Presets, including a debug or dedicated beta-signing keystore. Package ID should be finalized here (currently unset in `project.godot` — decide the real bundle ID, e.g. `com.sweettreat.game`, before the first external build; `com.example.sweettreat` used in dev is a placeholder and should not go out to testers).
-2. Create a Firebase project (console.firebase.google.com) and add an Android app with that package ID.
-3. Install the Firebase CLI (`npm install -g firebase-tools` or `brew install firebase-cli`) and run `firebase login`.
-4. In Firebase Console → App Distribution, create a **tester group** (e.g. `sweet-treat-beta`) and add tester emails.
+**One-time setup:**
+1. ✅ Done (2026-07-20) — JDK 17 (Temurin, via `brew install openjdk@17`), Android SDK cmdline-tools + platform-tools + build-tools 34.0.0 + platform android-34 (via `brew install --cask android-commandlinetools`), and the matching Godot 4.7.1 export templates are installed. Godot's Editor Settings point at the SDK (`export/android/android_sdk_path`, `java_sdk_path`).
+2. ✅ Done — Package ID finalized as **`com.sweettreat.app`** (the dev placeholder `com.example.sweettreat` is no longer used anywhere in export config). Set in `export_presets.cfg` (git-ignored — see below).
+3. ✅ Done — Debug keystore generated at `~/.android/debug.keystore` (standard alias `androiddebugkey`). A dedicated release/beta signing keystore was generated at `~/keystores/sweet-treat-release.keystore` (alias `sweet-treat-release`); credentials are in `~/keystores/sweet-treat-release.CREDENTIALS.txt` — **back this up somewhere safe (password manager) outside this machine.** Losing it means any future beta build can't be signed as an upgrade to earlier ones.
+4. ✅ Done — `export_presets.cfg` (project root) has the Android preset wired to both keystores, package ID, and version. It's git-ignored by Godot's default `.gitignore` (contains the release keystore password in plaintext) — never remove that ignore rule.
+5. ✅ Verified — both `godot --headless --export-debug "Android" build/sweet-treat-debug.apk` and the `--export-release` equivalent build and sign successfully (confirmed via `apksigner verify --print-certs` against the release keystore's fingerprint).
+6. **Still to do:** Create a Firebase project (console.firebase.google.com) and add an Android app with package ID `com.sweettreat.app`. Install the Firebase CLI (`npm install -g firebase-tools` or `brew install firebase-cli`) and run `firebase login` (interactive — needs your Google account). In Firebase Console → App Distribution, create a **tester group** (e.g. `sweet-treat-beta`) and add tester emails.
 
 **Per-release steps:**
-1. In Godot: `Project → Export → Android → Export Project` to produce a signed APK.
-2. Distribute:
+1. Bump `version/code` and `version/name` in `export_presets.cfg` (each Firebase App Distribution release needs a new version code).
+2. Export a release-signed APK — either via the Godot editor (`Project → Export → Android → Export Project`) or headless:
    ```
-   firebase appdistribution:distribute build/sweet-treat.apk \
+   godot --headless --export-release "Android" build/sweet-treat-release.apk
+   ```
+3. Distribute:
+   ```
+   firebase appdistribution:distribute build/sweet-treat-release.apk \
      --app <FIREBASE_APP_ID> \
      --groups "sweet-treat-beta" \
      --release-notes "Beta build N — see [feedback form link] after you play"
    ```
-3. Testers get an email/link, install the Firebase App Tester app (first time only), then install the build.
+4. Testers get an email/link, install the Firebase App Tester app (first time only), then install the build.
 
 ## 4. Recruitment
 
