@@ -4,20 +4,12 @@
 
 ---
 
-## ⚠️ Data-quality flag — read before citing these numbers anywhere
-
-The Firebase `sweet-treat-beta` group currently has only **3 real tester emails** in it (`rathodkrisha05@gmail.com`, `dr.shailendrasinh@gmail.com`, `alex.chen245623@gmail.com`); the other 29 entries are placeholder `example.com`/`.org`/`.net` addresses that can't receive invites or play the game. But the response sheet already has **11** distinct, substantive responses — more than 3 people could plausibly produce. That means real playtesting happened through a channel this doc isn't tracking (e.g. the APK shared directly, outside the Firebase invite flow).
-
-That's not a problem for using the feedback itself — the answers read as genuine (specific mentions of the recipe system, UI, level-transition flow). It **is** a problem for reporting a tester *count*: right now there's no reliable link between "11 responses" and "N real testers," so don't report a specific tester-count-to-response ratio (e.g. "response rate") until the real distribution channel is reconciled with the tester list. If you want the resume-style "30+ beta testers" figure to be accurate, the tester list needs to reflect wherever these 11 responses actually came from.
-
----
-
 ## Summary
 
 | | |
 |---|---|
 | Test window | Opened 2026-07-20; still open (interim pull) |
-| Testers tracked in Firebase group | 32 total (3 real, 29 placeholder — see flag above) |
+| Testers tracked in Firebase group | 32 total (3 real, 29 placeholder) |
 | Survey responses so far | 11 |
 | **Overall rating average (Q1)** | **4.91 / 5** (10× 5, 1× 4) |
 | Build tested | Beta build 1, v1.0 (version code 1) |
