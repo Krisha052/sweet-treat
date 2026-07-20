@@ -5,5 +5,8 @@
 *.import
 export_presets.cfg
 
+# Android build output
+/build/
+
 # macOS
 .DS_Store
