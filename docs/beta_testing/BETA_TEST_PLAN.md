@@ -78,6 +78,6 @@ Bugs and crash reports should be pulled out of the free-text survey answers into
 - Android app ID: `1:395226712448:android:1ba5fa6fc2cbaecb39d965` (package `com.sweettreat.app`)
 - Tester group: `sweet-treat-beta` (alias) — 32 testers added 2026-07-20. **Note:** 30 of the 32 are placeholder addresses on reserved `example.com`/`.org`/`.net` domains and will never receive the invite email; only `rathodkrisha05@gmail.com` and `dr.shailendrasinh@gmail.com` are real and will actually get access. Replace the placeholder 30 with real tester emails before treating response-rate numbers as meaningful (`firebase appdistribution:testers:add <emails> --group-alias sweet-treat-beta --project sweet-treat-5e733`, then remove the placeholders via `firebase appdistribution:testers:remove`).
 - Beta build 1 distributed 2026-07-20 (version 1.0, code 1): https://console.firebase.google.com/project/sweet-treat-5e733/appdistribution/app/android:com.sweettreat.app/releases/7m6tv2jnl44s0
-- Google Form (tester-facing): *(not yet created — see Section 5)*
-- Response Sheet (raw data): *(created alongside the form)*
+- Google Form (tester-facing): https://docs.google.com/forms/d/e/1FAIpQLSe7Jnj5fThWS6n9MaRiPuCF5RGQedJjhQn65CC77hOo51Y6dQ/viewform
+- Response Sheet (raw data): https://docs.google.com/spreadsheets/d/16z9EyeJ_LBkh3vBAmNb5q1pOa1EzVypqAYjAE3WkVfk/edit
 - Results summary: [`BETA_RESULTS.md`](BETA_RESULTS.md)
