@@ -6,6 +6,10 @@ A cozy 2D cafe simulation built in **Godot 4.7**. Race the clock, tap ingredient
 ![Platform](https://img.shields.io/badge/platform-iOS%20%7C%20Android-lightgrey)
 ![Status](https://img.shields.io/badge/status-in%20development-yellow)
 
+<p align="center">
+  <img src="docs/media/gameplay-demo.gif" alt="Sweet Treat gameplay demo — tapping ingredients on the chopping board to complete dish orders" width="320">
+</p>
+
 ---
 
 ## Gameplay
