@@ -1,0 +1,15 @@
+[gd_resource type="Resource" load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/recipe_data.gd" id="1_w"]
+[ext_resource type="Texture2D" path="res://assets/textures/dishes/Waffles.png" id="9_w"]
+[ext_resource type="Resource" path="res://data/ingredients/flour.tres" id="2_w"]
+[ext_resource type="Resource" path="res://data/ingredients/egg.tres" id="3_w"]
+[ext_resource type="Resource" path="res://data/ingredients/milk.tres" id="4_w"]
+[ext_resource type="Resource" path="res://data/ingredients/butter.tres" id="5_w"]
+
+[resource]
+script = ExtResource("1_w")
+id = "waffles"
+display_name = "Waffles"
+icon = ExtResource("9_w")
+ingredients = Array[IngredientData]([ExtResource("2_w"), ExtResource("3_w"), ExtResource("4_w"), ExtResource("5_w")])

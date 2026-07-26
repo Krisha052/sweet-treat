@@ -1,0 +1,16 @@
+[gd_resource type="Resource" load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/level_config.gd" id="1_lv17"]
+[ext_resource type="Resource" path="res://data/recipes/waffles.tres" id="2_lv17"]
+[ext_resource type="Resource" path="res://data/recipes/berry_waffles.tres" id="3_lv17"]
+[ext_resource type="Resource" path="res://data/recipes/strawberry_waffles.tres" id="4_lv17"]
+[ext_resource type="Resource" path="res://data/recipes/pancakes.tres" id="5_lv17"]
+[ext_resource type="Resource" path="res://data/recipes/berry_pancakes.tres" id="6_lv17"]
+[ext_resource type="Resource" path="res://data/recipes/cream_pancakes.tres" id="7_lv17"]
+
+[resource]
+script = ExtResource("1_lv17")
+level_id = 16
+time_limit_seconds = 34.0
+max_simultaneous_orders = 6
+recipe_pool = Array[RecipeData]([ExtResource("2_lv17"), ExtResource("3_lv17"), ExtResource("4_lv17"), ExtResource("5_lv17"), ExtResource("6_lv17"), ExtResource("7_lv17")])

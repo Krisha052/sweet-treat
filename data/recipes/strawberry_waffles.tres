@@ -1,0 +1,15 @@
+[gd_resource type="Resource" load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/recipe_data.gd" id="1_sw"]
+[ext_resource type="Texture2D" path="res://assets/textures/dishes/StrawberryWaffles.png" id="9_sw"]
+[ext_resource type="Resource" path="res://data/ingredients/flour.tres" id="2_sw"]
+[ext_resource type="Resource" path="res://data/ingredients/egg.tres" id="3_sw"]
+[ext_resource type="Resource" path="res://data/ingredients/butter.tres" id="4_sw"]
+[ext_resource type="Resource" path="res://data/ingredients/strawberry.tres" id="5_sw"]
+
+[resource]
+script = ExtResource("1_sw")
+id = "strawberry_waffles"
+display_name = "Strawberry Waffles"
+icon = ExtResource("9_sw")
+ingredients = Array[IngredientData]([ExtResource("2_sw"), ExtResource("3_sw"), ExtResource("4_sw"), ExtResource("5_sw")])

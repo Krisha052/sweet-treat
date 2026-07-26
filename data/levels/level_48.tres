@@ -1,0 +1,20 @@
+[gd_resource type="Resource" load_steps=9 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/level_config.gd" id="1_lv48"]
+[ext_resource type="Resource" path="res://data/recipes/caramel_latte.tres" id="2_lv48"]
+[ext_resource type="Resource" path="res://data/recipes/hot_chocolate.tres" id="3_lv48"]
+[ext_resource type="Resource" path="res://data/recipes/matcha_latte.tres" id="4_lv48"]
+[ext_resource type="Resource" path="res://data/recipes/honey_tea.tres" id="5_lv48"]
+[ext_resource type="Resource" path="res://data/recipes/chocolate_cake.tres" id="6_lv48"]
+[ext_resource type="Resource" path="res://data/recipes/espresso.tres" id="7_lv48"]
+[ext_resource type="Resource" path="res://data/recipes/caramel_latte_x2.tres" id="8_lv48"]
+[ext_resource type="Resource" path="res://data/recipes/honey_tea_x2.tres" id="9_lv48"]
+
+[resource]
+script = ExtResource("1_lv48")
+level_id = 47
+time_limit_seconds = 26.0
+max_simultaneous_orders = 6
+recipe_pool = Array[RecipeData]([ExtResource("2_lv48"), ExtResource("3_lv48"), ExtResource("4_lv48"), ExtResource("5_lv48"), ExtResource("6_lv48"), ExtResource("7_lv48"), ExtResource("8_lv48"), ExtResource("9_lv48")])
+board_cols = 8
+board_rows = 6

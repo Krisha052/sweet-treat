@@ -1,0 +1,11 @@
+[gd_resource type="Resource" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/ingredient_data.gd" id="1_cho"]
+[ext_resource type="Texture2D" path="res://assets/textures/ingredients/chocolate.png" id="2_cho"]
+
+[resource]
+script = ExtResource("1_cho")
+id = "chocolate"
+display_name = "Chocolate"
+color = Color(0.36, 0.20, 0.09, 1)
+icon = ExtResource("2_cho")

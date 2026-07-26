@@ -1,0 +1,14 @@
+[gd_resource type="Resource" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/recipe_data.gd" id="1_sc"]
+[ext_resource type="Texture2D" path="res://assets/textures/dishes/SugarCake.png" id="9_sc"]
+[ext_resource type="Resource" path="res://data/ingredients/sugar.tres" id="2_sc"]
+[ext_resource type="Resource" path="res://data/ingredients/egg.tres" id="3_sc"]
+[ext_resource type="Resource" path="res://data/ingredients/cream.tres" id="4_sc"]
+
+[resource]
+script = ExtResource("1_sc")
+id = "sugar_cake"
+display_name = "Sugar Cake"
+icon = ExtResource("9_sc")
+ingredients = Array[IngredientData]([ExtResource("2_sc"), ExtResource("2_sc"), ExtResource("3_sc"), ExtResource("4_sc")])

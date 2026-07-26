@@ -1,0 +1,16 @@
+[gd_resource type="Resource" load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/level_config.gd" id="1_lv13"]
+[ext_resource type="Resource" path="res://data/recipes/chocolate_cake.tres" id="2_lv13"]
+[ext_resource type="Resource" path="res://data/recipes/sugar_cake.tres" id="3_lv13"]
+[ext_resource type="Resource" path="res://data/recipes/dorayaki.tres" id="4_lv13"]
+[ext_resource type="Resource" path="res://data/recipes/purin.tres" id="5_lv13"]
+[ext_resource type="Resource" path="res://data/recipes/strawberry_daifuku.tres" id="6_lv13"]
+[ext_resource type="Resource" path="res://data/recipes/hot_chocolate.tres" id="7_lv13"]
+
+[resource]
+script = ExtResource("1_lv13")
+level_id = 12
+time_limit_seconds = 36.0
+max_simultaneous_orders = 5
+recipe_pool = Array[RecipeData]([ExtResource("2_lv13"), ExtResource("3_lv13"), ExtResource("4_lv13"), ExtResource("5_lv13"), ExtResource("6_lv13"), ExtResource("7_lv13")])

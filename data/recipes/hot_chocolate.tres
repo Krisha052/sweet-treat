@@ -1,0 +1,14 @@
+[gd_resource type="Resource" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/recipe_data.gd" id="1_hc"]
+[ext_resource type="Texture2D" path="res://assets/textures/dishes/HotChocolate.png" id="9_hc"]
+[ext_resource type="Resource" path="res://data/ingredients/chocolate.tres" id="2_hc"]
+[ext_resource type="Resource" path="res://data/ingredients/milk.tres" id="3_hc"]
+[ext_resource type="Resource" path="res://data/ingredients/cream.tres" id="4_hc"]
+
+[resource]
+script = ExtResource("1_hc")
+id = "hot_chocolate"
+display_name = "Hot Chocolate"
+icon = ExtResource("9_hc")
+ingredients = Array[IngredientData]([ExtResource("2_hc"), ExtResource("2_hc"), ExtResource("3_hc"), ExtResource("4_hc")])

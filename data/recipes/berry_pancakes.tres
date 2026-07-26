@@ -1,0 +1,14 @@
+[gd_resource type="Resource" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/recipe_data.gd" id="1_bp"]
+[ext_resource type="Texture2D" path="res://assets/textures/dishes/PancakesBerry.png" id="9_bp"]
+[ext_resource type="Resource" path="res://data/ingredients/flour.tres" id="2_bp"]
+[ext_resource type="Resource" path="res://data/ingredients/milk.tres" id="3_bp"]
+[ext_resource type="Resource" path="res://data/ingredients/raspberry.tres" id="4_bp"]
+
+[resource]
+script = ExtResource("1_bp")
+id = "berry_pancakes"
+display_name = "Berry Pancakes"
+icon = ExtResource("9_bp")
+ingredients = Array[IngredientData]([ExtResource("2_bp"), ExtResource("3_bp"), ExtResource("4_bp")])

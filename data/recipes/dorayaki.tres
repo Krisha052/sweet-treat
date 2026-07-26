@@ -1,0 +1,15 @@
+[gd_resource type="Resource" load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/recipe_data.gd" id="1_d"]
+[ext_resource type="Texture2D" path="res://assets/textures/dishes/Dorayaki.png" id="9_d"]
+[ext_resource type="Resource" path="res://data/ingredients/flour.tres" id="2_d"]
+[ext_resource type="Resource" path="res://data/ingredients/egg.tres" id="3_d"]
+[ext_resource type="Resource" path="res://data/ingredients/milk.tres" id="4_d"]
+[ext_resource type="Resource" path="res://data/ingredients/chocolate.tres" id="5_d"]
+
+[resource]
+script = ExtResource("1_d")
+id = "dorayaki"
+display_name = "Dorayaki"
+icon = ExtResource("9_d")
+ingredients = Array[IngredientData]([ExtResource("2_d"), ExtResource("3_d"), ExtResource("4_d"), ExtResource("5_d")])

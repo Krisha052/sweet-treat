@@ -1,0 +1,14 @@
+[gd_resource type="Resource" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/recipe_data.gd" id="1_ht"]
+[ext_resource type="Texture2D" path="res://assets/textures/dishes/HoneyTea.png" id="9_ht"]
+[ext_resource type="Resource" path="res://data/ingredients/red_tea.tres" id="2_ht"]
+[ext_resource type="Resource" path="res://data/ingredients/caramel.tres" id="3_ht"]
+[ext_resource type="Resource" path="res://data/ingredients/foam.tres" id="4_ht"]
+
+[resource]
+script = ExtResource("1_ht")
+id = "honey_tea"
+display_name = "Honey Tea"
+icon = ExtResource("9_ht")
+ingredients = Array[IngredientData]([ExtResource("2_ht"), ExtResource("2_ht"), ExtResource("3_ht"), ExtResource("4_ht")])

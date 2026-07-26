@@ -1,0 +1,14 @@
+[gd_resource type="Resource" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/recipe_data.gd" id="1_px"]
+[ext_resource type="Texture2D" path="res://assets/textures/dishes/Pancakes.png" id="9_px"]
+[ext_resource type="Resource" path="res://data/ingredients/flour.tres" id="2_px"]
+[ext_resource type="Resource" path="res://data/ingredients/egg.tres" id="3_px"]
+[ext_resource type="Resource" path="res://data/ingredients/milk.tres" id="4_px"]
+
+[resource]
+script = ExtResource("1_px")
+id = "pancakes_x2"
+display_name = "Pancakes x2"
+icon = ExtResource("9_px")
+ingredients = Array[IngredientData]([ExtResource("2_px"), ExtResource("2_px"), ExtResource("3_px"), ExtResource("3_px"), ExtResource("4_px"), ExtResource("4_px")])

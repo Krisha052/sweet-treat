@@ -1,0 +1,14 @@
+[gd_resource type="Resource" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/recipe_data.gd" id="1_ml"]
+[ext_resource type="Texture2D" path="res://assets/textures/dishes/MatchaLatte.png" id="9_ml"]
+[ext_resource type="Resource" path="res://data/ingredients/matcha.tres" id="2_ml"]
+[ext_resource type="Resource" path="res://data/ingredients/cream.tres" id="3_ml"]
+[ext_resource type="Resource" path="res://data/ingredients/foam.tres" id="4_ml"]
+
+[resource]
+script = ExtResource("1_ml")
+id = "matcha_latte"
+display_name = "Matcha Latte"
+icon = ExtResource("9_ml")
+ingredients = Array[IngredientData]([ExtResource("2_ml"), ExtResource("2_ml"), ExtResource("3_ml"), ExtResource("4_ml")])

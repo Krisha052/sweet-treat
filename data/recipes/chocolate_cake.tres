@@ -1,0 +1,14 @@
+[gd_resource type="Resource" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/recipe_data.gd" id="1_cc"]
+[ext_resource type="Texture2D" path="res://assets/textures/dishes/ChocolateCake.png" id="9_cc"]
+[ext_resource type="Resource" path="res://data/ingredients/chocolate.tres" id="2_cc"]
+[ext_resource type="Resource" path="res://data/ingredients/cream.tres" id="3_cc"]
+[ext_resource type="Resource" path="res://data/ingredients/sugar.tres" id="4_cc"]
+
+[resource]
+script = ExtResource("1_cc")
+id = "chocolate_cake"
+display_name = "Chocolate Cake"
+icon = ExtResource("9_cc")
+ingredients = Array[IngredientData]([ExtResource("2_cc"), ExtResource("2_cc"), ExtResource("3_cc"), ExtResource("4_cc")])

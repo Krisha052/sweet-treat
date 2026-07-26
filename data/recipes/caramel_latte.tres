@@ -1,0 +1,14 @@
+[gd_resource type="Resource" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/recipe_data.gd" id="1_cl"]
+[ext_resource type="Texture2D" path="res://assets/textures/dishes/CaramelLatte.png" id="9_cl"]
+[ext_resource type="Resource" path="res://data/ingredients/bean_dark_roast.tres" id="2_cl"]
+[ext_resource type="Resource" path="res://data/ingredients/caramel.tres" id="3_cl"]
+[ext_resource type="Resource" path="res://data/ingredients/cream.tres" id="4_cl"]
+
+[resource]
+script = ExtResource("1_cl")
+id = "caramel_latte"
+display_name = "Caramel Latte"
+icon = ExtResource("9_cl")
+ingredients = Array[IngredientData]([ExtResource("2_cl"), ExtResource("2_cl"), ExtResource("3_cl"), ExtResource("4_cl")])

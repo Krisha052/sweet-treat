@@ -1,0 +1,14 @@
+[gd_resource type="Resource" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/recipe_data.gd" id="1_sd"]
+[ext_resource type="Texture2D" path="res://assets/textures/dishes/StrawberryDaifuku.png" id="9_sd"]
+[ext_resource type="Resource" path="res://data/ingredients/flour.tres" id="2_sd"]
+[ext_resource type="Resource" path="res://data/ingredients/sugar.tres" id="3_sd"]
+[ext_resource type="Resource" path="res://data/ingredients/strawberry.tres" id="4_sd"]
+
+[resource]
+script = ExtResource("1_sd")
+id = "strawberry_daifuku"
+display_name = "Strawberry Daifuku"
+icon = ExtResource("9_sd")
+ingredients = Array[IngredientData]([ExtResource("2_sd"), ExtResource("3_sd"), ExtResource("4_sd")])
