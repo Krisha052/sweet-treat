@@ -294,9 +294,9 @@ data/ingredients/, data/recipes/, data/levels/ — .tres resources
 
 **Save Data:** Local save file (`save.cfg`). `unlocked_level_index` tracks progress. `MAX_LEVEL_INDEX` is a constant in `scripts/ui/main_menu.gd`; update it when the level count changes. (`level_controller.gd`'s own win-sequence check is separate — it looks for the next `level_%02d.tres` file rather than reading this constant, so both places need checking when levels are added.)
 
-**Dev reset (debug builds only):** `Ctrl+Shift+R` in any scene resets `unlocked_level_index=0` and routes to title screen. Gated by `OS.has_feature("debug")` — no-op in release builds. Keyboard-only; not triggerable on device touchscreen. To reset on-device: `adb -s <device> shell run-as com.example.sweettreat rm files/save.cfg` (Debug builds only; confirmed working via Wireless Debugging).
+**Dev reset (debug builds only):** `Ctrl+Shift+R` in any scene resets `unlocked_level_index=0` and routes to title screen. Gated by `OS.has_feature("debug")` — no-op in release builds. Keyboard-only; not triggerable on device touchscreen. To reset on-device: `adb -s <device> shell run-as com.sweettreat.app rm files/save.cfg` (Debug builds only; confirmed working via Wireless Debugging).
 
-**On-device test setup:** Android, JDK 17 Temurin, standalone Android SDK cmdline-tools, Wireless Debugging. Package name: `com.example.sweettreat`. Pairing and connection ports are always different — use fresh port from phone's Wireless Debugging screen each session. "adb: device offline" fix: `adb disconnect && adb kill-server && adb start-server && adb connect <ip:port>`. See project handoff notes for full setup details.
+**On-device test setup:** Android, JDK 17 Temurin, standalone Android SDK cmdline-tools, Wireless Debugging. Package name: `com.sweettreat.app`. Pairing and connection ports are always different — use fresh port from phone's Wireless Debugging screen each session. "adb: device offline" fix: `adb disconnect && adb kill-server && adb start-server && adb connect <ip:port>`. See project handoff notes for full setup details.
 
 **Editor-only testing insufficient for:** input bugs (touch/mouse race condition, confirmed via `c4192db`), layout bugs (orientation/resolution), on-device performance profiling. Always verify input and layout changes on actual Android hardware.
 
