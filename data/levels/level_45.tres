@@ -1,22 +1,18 @@
-[gd_resource type="Resource" load_steps=11 format=3]
+[gd_resource type="Resource" load_steps=9 format=3]
 
 [ext_resource type="Script" path="res://scripts/resources/level_config.gd" id="1_lv45"]
-[ext_resource type="Resource" path="res://data/recipes/waffles.tres" id="2_lv45"]
-[ext_resource type="Resource" path="res://data/recipes/berry_waffles.tres" id="3_lv45"]
-[ext_resource type="Resource" path="res://data/recipes/chocolate_waffles.tres" id="4_lv45"]
-[ext_resource type="Resource" path="res://data/recipes/strawberry_waffles.tres" id="5_lv45"]
-[ext_resource type="Resource" path="res://data/recipes/pancakes.tres" id="6_lv45"]
-[ext_resource type="Resource" path="res://data/recipes/berry_pancakes.tres" id="7_lv45"]
-[ext_resource type="Resource" path="res://data/recipes/chocolate_pancakes.tres" id="8_lv45"]
-[ext_resource type="Resource" path="res://data/recipes/cream_pancakes.tres" id="9_lv45"]
-[ext_resource type="Resource" path="res://data/recipes/waffles_x2.tres" id="10_lv45"]
-[ext_resource type="Resource" path="res://data/recipes/pancakes_x2.tres" id="11_lv45"]
+[ext_resource type="Resource" path="res://data/recipes/bread.tres" id="2_lv45"]
+[ext_resource type="Resource" path="res://data/recipes/waffles.tres" id="3_lv45"]
+[ext_resource type="Resource" path="res://data/recipes/pancakes.tres" id="4_lv45"]
+[ext_resource type="Resource" path="res://data/recipes/berry_pancakes.tres" id="5_lv45"]
+[ext_resource type="Resource" path="res://data/recipes/cream_pancakes.tres" id="6_lv45"]
+[ext_resource type="Resource" path="res://data/recipes/waffles_x2.tres" id="7_lv45"]
+[ext_resource type="Resource" path="res://data/recipes/bread_x2.tres" id="8_lv45"]
+[ext_resource type="Resource" path="res://data/recipes/pancakes_x2.tres" id="9_lv45"]
 
 [resource]
 script = ExtResource("1_lv45")
 level_id = 44
-time_limit_seconds = 30.0
+time_limit_seconds = 33.0
 max_simultaneous_orders = 6
-recipe_pool = Array[RecipeData]([ExtResource("2_lv45"), ExtResource("3_lv45"), ExtResource("4_lv45"), ExtResource("5_lv45"), ExtResource("6_lv45"), ExtResource("7_lv45"), ExtResource("8_lv45"), ExtResource("9_lv45"), ExtResource("10_lv45"), ExtResource("11_lv45")])
-board_cols = 8
-board_rows = 6
+recipe_pool = Array[RecipeData]([ExtResource("2_lv45"), ExtResource("3_lv45"), ExtResource("3_lv45"), ExtResource("4_lv45"), ExtResource("5_lv45"), ExtResource("6_lv45"), ExtResource("6_lv45"), ExtResource("7_lv45"), ExtResource("7_lv45"), ExtResource("8_lv45"), ExtResource("9_lv45")])

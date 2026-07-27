@@ -1,18 +1,16 @@
-[gd_resource type="Resource" load_steps=9 format=3]
+[gd_resource type="Resource" load_steps=7 format=3]
 
 [ext_resource type="Script" path="res://scripts/resources/level_config.gd" id="1_lv34"]
-[ext_resource type="Resource" path="res://data/recipes/waffles.tres" id="2_lv34"]
-[ext_resource type="Resource" path="res://data/recipes/berry_waffles.tres" id="3_lv34"]
-[ext_resource type="Resource" path="res://data/recipes/chocolate_waffles.tres" id="4_lv34"]
-[ext_resource type="Resource" path="res://data/recipes/strawberry_waffles.tres" id="5_lv34"]
-[ext_resource type="Resource" path="res://data/recipes/pancakes.tres" id="6_lv34"]
-[ext_resource type="Resource" path="res://data/recipes/berry_pancakes.tres" id="7_lv34"]
-[ext_resource type="Resource" path="res://data/recipes/chocolate_pancakes.tres" id="8_lv34"]
-[ext_resource type="Resource" path="res://data/recipes/cream_pancakes.tres" id="9_lv34"]
+[ext_resource type="Resource" path="res://data/recipes/chocolate_cake.tres" id="2_lv34"]
+[ext_resource type="Resource" path="res://data/recipes/sugar_cake.tres" id="3_lv34"]
+[ext_resource type="Resource" path="res://data/recipes/dorayaki.tres" id="4_lv34"]
+[ext_resource type="Resource" path="res://data/recipes/purin.tres" id="5_lv34"]
+[ext_resource type="Resource" path="res://data/recipes/strawberry_daifuku.tres" id="6_lv34"]
+[ext_resource type="Resource" path="res://data/recipes/strawberry_cake.tres" id="7_lv34"]
 
 [resource]
 script = ExtResource("1_lv34")
 level_id = 33
-time_limit_seconds = 24.0
+time_limit_seconds = 25.0
 max_simultaneous_orders = 6
-recipe_pool = Array[RecipeData]([ExtResource("2_lv34"), ExtResource("3_lv34"), ExtResource("4_lv34"), ExtResource("5_lv34"), ExtResource("6_lv34"), ExtResource("7_lv34"), ExtResource("8_lv34"), ExtResource("9_lv34")])
+recipe_pool = Array[RecipeData]([ExtResource("2_lv34"), ExtResource("2_lv34"), ExtResource("2_lv34"), ExtResource("3_lv34"), ExtResource("3_lv34"), ExtResource("4_lv34"), ExtResource("4_lv34"), ExtResource("5_lv34"), ExtResource("5_lv34"), ExtResource("6_lv34"), ExtResource("6_lv34"), ExtResource("7_lv34"), ExtResource("7_lv34")])

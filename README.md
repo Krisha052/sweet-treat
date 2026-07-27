@@ -25,7 +25,7 @@ A cozy 2D cafe simulation built in **Godot 4.7**. Race the clock, tap ingredient
 | | |
 |---|---|
 | Levels implemented | 50 (of a planned 50) |
-| Recipes | 34 |
+| Recipes | 33 |
 | Ingredients | 19 |
 | Ads (AdMob) | Not yet integrated |
 

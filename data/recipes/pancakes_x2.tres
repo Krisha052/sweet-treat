@@ -1,7 +1,7 @@
 [gd_resource type="Resource" load_steps=5 format=3]
 
 [ext_resource type="Script" path="res://scripts/resources/recipe_data.gd" id="1_px"]
-[ext_resource type="Texture2D" path="res://assets/textures/dishes/Pancakes.png" id="9_px"]
+[ext_resource type="Texture2D" path="res://assets/textures/dishes/PancakesX2.png" id="9_px"]
 [ext_resource type="Resource" path="res://data/ingredients/flour.tres" id="2_px"]
 [ext_resource type="Resource" path="res://data/ingredients/egg.tres" id="3_px"]
 [ext_resource type="Resource" path="res://data/ingredients/milk.tres" id="4_px"]

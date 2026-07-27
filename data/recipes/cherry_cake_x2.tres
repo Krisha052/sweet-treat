@@ -1,14 +1,14 @@
 [gd_resource type="Resource" load_steps=5 format=3]
 
 [ext_resource type="Script" path="res://scripts/resources/recipe_data.gd" id="1_ccx"]
-[ext_resource type="Texture2D" path="res://assets/textures/dishes/CoconutCake.png" id="9_ccx"]
-[ext_resource type="Resource" path="res://data/ingredients/coconut.tres" id="2_ccx"]
+[ext_resource type="Texture2D" path="res://assets/textures/dishes/CherryCakeX2.png" id="9_ccx"]
+[ext_resource type="Resource" path="res://data/ingredients/cherry.tres" id="2_ccx"]
 [ext_resource type="Resource" path="res://data/ingredients/flour.tres" id="3_ccx"]
 [ext_resource type="Resource" path="res://data/ingredients/egg.tres" id="4_ccx"]
 
 [resource]
 script = ExtResource("1_ccx")
-id = "coconut_cake_x2"
-display_name = "Coconut Cake x2"
+id = "cherry_cake_x2"
+display_name = "Cherry Cake x2"
 icon = ExtResource("9_ccx")
 ingredients = Array[IngredientData]([ExtResource("2_ccx"), ExtResource("2_ccx"), ExtResource("2_ccx"), ExtResource("2_ccx"), ExtResource("3_ccx"), ExtResource("3_ccx"), ExtResource("4_ccx"), ExtResource("4_ccx")])

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/recipe_data.gd" id="1_rcx"]
+[ext_resource type="Texture2D" path="res://assets/textures/dishes/RaspberryCakeX2.png" id="9_rcx"]
+[ext_resource type="Resource" path="res://data/ingredients/raspberry.tres" id="2_rcx"]
+[ext_resource type="Resource" path="res://data/ingredients/flour.tres" id="3_rcx"]
+[ext_resource type="Resource" path="res://data/ingredients/egg.tres" id="4_rcx"]
+
+[resource]
+script = ExtResource("1_rcx")
+id = "raspberry_cake_x2"
+display_name = "Raspberry Cake x2"
+icon = ExtResource("9_rcx")
+ingredients = Array[IngredientData]([ExtResource("2_rcx"), ExtResource("2_rcx"), ExtResource("2_rcx"), ExtResource("2_rcx"), ExtResource("3_rcx"), ExtResource("3_rcx"), ExtResource("4_rcx"), ExtResource("4_rcx")])

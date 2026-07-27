@@ -1,0 +1,14 @@
+[gd_resource type="Resource" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/recipe_data.gd" id="1_bx"]
+[ext_resource type="Texture2D" path="res://assets/textures/dishes/BreadX2.png" id="9_bx"]
+[ext_resource type="Resource" path="res://data/ingredients/flour.tres" id="2_bx"]
+[ext_resource type="Resource" path="res://data/ingredients/milk.tres" id="3_bx"]
+[ext_resource type="Resource" path="res://data/ingredients/egg.tres" id="4_bx"]
+
+[resource]
+script = ExtResource("1_bx")
+id = "bread_x2"
+display_name = "Bread x2"
+icon = ExtResource("9_bx")
+ingredients = Array[IngredientData]([ExtResource("2_bx"), ExtResource("2_bx"), ExtResource("3_bx"), ExtResource("3_bx"), ExtResource("4_bx"), ExtResource("4_bx"), ExtResource("4_bx"), ExtResource("4_bx")])
