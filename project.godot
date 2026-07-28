@@ -20,7 +20,7 @@ config/main_scene="res://scenes/main.tscn"
 
 GameManager="*res://autoload/game_manager.gd"
 SaveManager="*res://autoload/save_manager.gd"
-AdManager="*res://autoload/ad_manager.gd"
+AdManager="*res://autoload/ad_manager.tscn"
 
 [display]
 
@@ -29,6 +29,10 @@ window/size/viewport_height=1920
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 window/handheld/orientation=1
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/AdmobPlugin/plugin.cfg")
 
 [physics]
 

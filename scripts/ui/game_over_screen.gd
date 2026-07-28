@@ -7,5 +7,5 @@ func _ready() -> void:
 
 	await get_tree().create_timer(3.0).timeout
 	tween.kill()
-	# TODO: show interstitial ad here
+	await AdManager.show_interstitial()
 	get_tree().call_deferred("change_scene_to_file", "res://scenes/ui/restart_game_screen.tscn")

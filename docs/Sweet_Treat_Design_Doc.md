@@ -1,6 +1,6 @@
 # Sweet Treat — Game Design Document
 
-*Last updated: July 27, 2026*
+*Last updated: July 28, 2026*
 
 ---
 
@@ -16,7 +16,7 @@
 
 **Platforms:** Mobile (iOS + Android) for initial launch; Desktop (Windows/Mac) planned as a later phase. Built in Godot 4.7.
 
-**Business Model:** Free-to-play, supported by ads (banner, interstitial, and rewarded). *(Not yet implemented — see Section 5, Phase 5 status.)*
+**Business Model:** Free-to-play, supported by ads (banner, interstitial, and rewarded). *(Interstitial implemented on Android with test ads; banner and rewarded not yet — see Section 5, Phase 5 status.)*
 
 **Target release scope:** 50 levels. *(All 50 implemented — see Section 6.)*
 
@@ -263,8 +263,11 @@ Game Setup Frame → [lose]
 - `#8a8f13` (olive green) — Level Complete background state; ingredient selection highlight (`modulate` on `Sprite2D` child only, not root node)
 
 **Monetization:**
-- Banner, interstitial, rewarded ads via `godot-sdk-integrations/godot-admob`
-- **Status: Phase 5, not started.** `AdManager` autoload (`autoload/ad_manager.gd`) is currently a stub.
+- Banner, interstitial, rewarded ads via `godot-sdk-integrations/godot-admob` (plugin v7.0, Godot 4.7-compatible; installed in `addons/AdmobPlugin/`)
+- **Status: Interstitial done (Android, test ads); banner and rewarded deferred.** `AdManager` (`autoload/ad_manager.tscn` + `ad_manager.gd`) wraps an `Admob` child node and exposes `show_interstitial()` (awaitable — shows a preloaded ad and waits for dismissal, or returns immediately if none is ready so a scene transition never stalls). Wired into both existing interstitial points: Game Over → Restart (`scripts/ui/game_over_screen.gd`) and Level Complete → Next Level (`scripts/gameplay/level_controller.gd`). `show_banner()`/`hide_banner()`/`show_rewarded()` remain no-op stubs — no banner placement or reward mechanic has been decided yet (see Section 8).
+- Currently running on Google's published test ad unit IDs (`android_debug_application_id`/`is_real = false` on the `Admob` node in `ad_manager.tscn`) — no live AdMob account exists yet. Real IDs go in `android_real_application_id` / `android_real_interstitial_id` on that same node once one exists, then flip `is_real = true`.
+- Android only — no iOS export preset exists yet (see Section 6 open items).
+- Required Custom Gradle Build, previously off: `export_presets.cfg` now has `gradle_build/use_gradle_build=true`, `gradle_build/min_sdk="24"` (this file is gitignored — machine-local, not something a `git diff` will show).
 
 **Remaining art needs:**
 - App icon, splash screen
@@ -303,8 +306,9 @@ data/ingredients/, data/recipes/, data/levels/ — .tres resources
 **Open technical items:**
 - Target frame rate and minimum supported device specs
 - Apple Developer account + Google Play Console setup
-- iOS build/signing pipeline (requires Mac access)
-- AdMob Phase 5 integration
+- iOS build/signing pipeline (requires Mac access) — also blocks iOS AdMob config (Info.plist, SKAdNetwork, App Tracking Transparency prompt), which the plugin otherwise handles automatically at export time
+- Real AdMob account + app + ad unit IDs (currently running on Google's test IDs)
+- GDPR/UMP consent flow (Play Store requires this before showing ads to EEA/UK users — plugin has UMP support built in, just not wired up yet)
 
 ---
 
@@ -318,7 +322,7 @@ data/ingredients/, data/recipes/, data/levels/ — .tres resources
 | 4 — UI/art polish, responsive layout | ✅ Done (confirmed working on-device) |
 | 4b — Order completion redesign (selection-pool model) | ✅ Done (commit `4569cee`) |
 | 4c — Variable board size architecture (per-level `board_cols`/`board_rows`) | ✅ Done (endgame Tier 5 levels now use it, see Phase 6) |
-| 5 — AdMob integration | ⬜ Not started |
+| 5 — AdMob integration | 🟨 Partial — interstitial done (Android, test ads); banner and rewarded deferred, see Section 5/8 |
 | 6 — Content build (Levels 9–50, new recipes/ingredients) | ✅ Done (19 ingredients, 33 recipes, 50 levels; see Section 4). 2x multiplier is a data-only fake, not a real engine feature — see Section 3 implementation note. Levels 11–50 reworked 2026-07-27 after developer playtest (see Document History). |
 
 **Key commits for reference:**
@@ -344,7 +348,11 @@ data/ingredients/, data/recipes/, data/levels/ — .tres resources
 | Dead space below card row on tall phones | 491–584px empty at 21:9. Not a bug — the card row is correctly positioned relative to the board. Worth revisiting post-launch whether to use this space (e.g. slightly taller board on tall phones). |
 | Recipe-match selection weighting | When multiple database recipes are completable from the current board, the next dish card is chosen fully at random among valid matches. Weighting to avoid recently-seen dishes repeating is a possible UX improvement — not decided, deferred. |
 | No tutorial in shipped game | Players learn tap-to-select + Recipe Frame by trial. Consider a simple guided Level 1 experience post-MVP. Beta test (see [`beta_testing/BETA_TEST_PLAN.md`](beta_testing/BETA_TEST_PLAN.md)) Q4 directly measures this. |
-| AdMob integration | Phase 5, not started. `AdManager` is a stub. |
+| Rewarded-ad mechanic undecided | `AdManager.show_rewarded()` is still a no-op stub. Design doc lists rewarded ads as part of the business model, but no in-game reward (extra time? free retry? skip a level?) has been designed yet — needs a product decision before it can be built. |
+| Banner ad placement undecided | `AdManager.show_banner()`/`hide_banner()` are still no-op stubs. No screen has been chosen for a persistent banner. |
+| Real AdMob account/IDs not yet created | Interstitial currently runs on Google's published test ad unit IDs. Real IDs need an AdMob account + registered app, then go in `android_real_application_id`/`android_real_interstitial_id` on the `Admob` node in `autoload/ad_manager.tscn`, with `is_real` flipped to `true`. |
+| GDPR/UMP consent flow not built | Required by Google's EU User Consent Policy before showing (especially personalized) ads to EEA/UK users — a Play Store submission blocker, not just a nice-to-have. The plugin has built-in UMP support (`load_consent_form()`, `update_consent_info()`, `consent_info_updated` signal on the `Admob` node) that isn't wired up yet. |
+| iOS AdMob config deferred | Blocked on the iOS build/signing pipeline (no export preset exists yet). The plugin auto-configures `Info.plist` (`GADApplicationIdentifier`, SKAdNetwork entries, App Tracking Transparency string) at export time once that pipeline exists — shouldn't need much extra work beyond adding real iOS app/ad-unit IDs to the `Admob` node. |
 | iOS build/signing | Requires Mac access — confirm before targeting App Store launch. |
 | App Store / Play Store review timelines | First submissions take longer than expected — budget extra time. |
 | Solo dev bandwidth | Level/recipe balancing, art sourcing, AdMob integration, and cross-device QA all fall on one person. |
@@ -383,4 +391,5 @@ These are established patterns from the project's development history. Continue 
 | July 20, 2026 | Added README.md; confirmed repository URL against `git remote -v`; corrected `MAX_LEVEL_INDEX` location — it lives only in `main_menu.gd` (`level_controller.gd`'s win-sequence check is file-existence based, not constant-based) |
 | July 20, 2026 | Added beta test plan, survey question set, and results template under `docs/beta_testing/` ahead of the 8-level Android beta |
 | July 26, 2026 | Content build complete: 7 new ingredients (matcha, chocolate, cream, butter, sugar, caramel, raspberry) and 24 new recipes added (19 ingredients / 34 recipes total); Levels 9–50 authored across all 5 tiers; `MAX_LEVEL_INDEX` updated to 49. Recipe set diverged from the earlier 24-recipe plan since only 6 of 14 previously-proposed recipes had matching art — redesigned around a waffle/pancake family and a Japanese-dessert family that arrived instead (see Section 4). 2x batch multiplier implemented as a data-only fake (`_x2` RecipeData resources) since no engine-level multiplier field exists. Asset swaps: strawberry_cake got new icon art, old strawberry-cake art repurposed for new raspberry_cake recipe, milk ingredient got new carton art. |
-| July 27, 2026 | Developer playtest round on the 50-level build produced a full Tier 2–5 level-design rework (Levels 11–50 regenerated, now 33 recipes total after removing 4 unused `_x2` resources and adding 3 new ones). Root cause found: `recipe_pool.size()` is literally total-orders-to-win, not just variety, so the original design conflated "more orders" with "more brand-new dishes" — new levels now cap new-recipe introduction at 2/level always mixed with known recipes, and scale difficulty via duplicate-padded order counts instead. Tier 5 board reverted from 8×6 to 6×6 (developer decision); Tier 4/5 2x pools now mix old and new recipes (both as base pool and as the doubled set specifically), each `_x2` recipe got its own "×2"-badged icon. Asset fixes: milk reverted to original jug art, chocolate ingredient swapped to new developer-provided source art, off-center new dish icons (waffle family, hot chocolate) recentered, caramel/CaramelLatte icons flagged for future replacement. |
+| July 27, 2026 | Developer playtest round on the 50-level build produced a full Tier 2–5 level-design rework (Levels 11–50 regenerated, now 33 recipes total after removing 4 unused `_x2` resources and adding 3 new ones). Root cause found: `recipe_pool.size()` is literally total-orders-to-win, not just variety, so the original design conflated "more orders" with "more brand-new dishes" — new levels now cap new-recipe introduction at 2/level always mixed with known recipes, and scale difficulty via duplicate-padded order counts instead. Tier 5 board reverted from 8×6 to 6×6 (developer decision); Tier 4/5 2x pools now mix old and new recipes (both as base pool and as the doubled set specifically), each `_x2` recipe got its own "×2"-badged icon. Asset fixes: milk reverted to original jug art, chocolate ingredient swapped to new developer-provided source art, off-center new dish icons (waffle family, hot chocolate) recentered, caramel/CaramelLatte icons flagged for future replacement. Also fixed stale Android package name (`com.example.sweettreat` → `com.sweettreat.app`) in this doc. |
+| July 28, 2026 | Phase 5 (AdMob) partially implemented: interstitial ads wired up on Android using `godot-sdk-integrations/godot-admob` v7.0, running on Google's test ad unit IDs (no live AdMob account yet). `AdManager` converted from a script-only autoload to a scene (`ad_manager.tscn`) wrapping an `Admob` child node; `show_interstitial()` preloads ahead of time, shows only if ready, and always lets scene transitions continue even if no ad is available. Wired into both existing TODO points (Game Over → Restart, Level Complete → Next Level). Required enabling Godot's Custom Gradle Build (`export_presets.cfg`, gitignored/machine-local) since the plugin ships native AAR dependencies. Banner and rewarded ads, real AdMob IDs, GDPR/UMP consent, and iOS config all explicitly deferred — see Section 8. |

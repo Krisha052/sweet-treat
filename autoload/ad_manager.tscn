@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://autoload/ad_manager.gd" id="1_admgr"]
+[ext_resource type="Script" path="res://addons/AdmobPlugin/Admob.gd" id="2_admob"]
+
+[node name="AdManager" type="Node"]
+script = ExtResource("1_admgr")
+
+[node name="Admob" type="Node" parent="."]
+script = ExtResource("2_admob")
+is_real = false
+android_debug_application_id = "ca-app-pub-3940256099942544~3347511713"
+remove_interstitial_ads_after_displayed = true
