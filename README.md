@@ -24,12 +24,12 @@ A cozy 2D cafe simulation built in **Godot 4.7**. Race the clock, tap ingredient
 
 | | |
 |---|---|
-| Levels implemented | 50 (of a planned 50) |
+| Levels implemented | 100 (of a planned 100) |
 | Recipes | 33 |
 | Ingredients | 19 |
 | Ads (AdMob) | Interstitial live on Android (test ads); banner/rewarded pending |
 
-See [`docs/Sweet_Treat_Design_Doc.md`](docs/Sweet_Treat_Design_Doc.md) for the full design doc, level-tier breakdown, and implementation status.
+See [`docs/Sweet_Treat_Design_Doc.md`](docs/Sweet_Treat_Design_Doc.md) for the full design doc, 100-level progression structure, and implementation status.
 
 ## Beta testing
 
@@ -69,7 +69,7 @@ docs/                           design doc
 
 - **Engine:** Godot 4.7 (GDScript)
 - **Target platforms:** iOS + Android (mobile-first); desktop planned later
-- **Monetization:** AdMob (banner/interstitial/rewarded) — planned, not yet wired up
+- **Monetization:** AdMob — interstitial live on Android (test ads); banner/rewarded not yet wired up
 
 ## License
 

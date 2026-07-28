@@ -1,0 +1,16 @@
+[gd_resource type="Resource" load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/level_config.gd" id="1_lv86"]
+[ext_resource type="Resource" path="res://data/recipes/bread.tres" id="2_lv86"]
+[ext_resource type="Resource" path="res://data/recipes/bun.tres" id="3_lv86"]
+[ext_resource type="Resource" path="res://data/recipes/croissant.tres" id="4_lv86"]
+[ext_resource type="Resource" path="res://data/recipes/cherry_cake.tres" id="5_lv86"]
+[ext_resource type="Resource" path="res://data/recipes/coconut_cake.tres" id="6_lv86"]
+[ext_resource type="Resource" path="res://data/recipes/coffee_cake.tres" id="7_lv86"]
+
+[resource]
+script = ExtResource("1_lv86")
+level_id = 85
+time_limit_seconds = 180.0
+max_simultaneous_orders = 6
+recipe_pool = Array[RecipeData]([ExtResource("2_lv86"), ExtResource("2_lv86"), ExtResource("2_lv86"), ExtResource("2_lv86"), ExtResource("2_lv86"), ExtResource("2_lv86"), ExtResource("3_lv86"), ExtResource("3_lv86"), ExtResource("3_lv86"), ExtResource("3_lv86"), ExtResource("3_lv86"), ExtResource("4_lv86"), ExtResource("4_lv86"), ExtResource("4_lv86"), ExtResource("4_lv86"), ExtResource("4_lv86"), ExtResource("5_lv86"), ExtResource("5_lv86"), ExtResource("5_lv86"), ExtResource("5_lv86"), ExtResource("5_lv86"), ExtResource("6_lv86"), ExtResource("6_lv86"), ExtResource("6_lv86"), ExtResource("6_lv86"), ExtResource("6_lv86"), ExtResource("7_lv86"), ExtResource("7_lv86"), ExtResource("7_lv86"), ExtResource("7_lv86"), ExtResource("7_lv86")])

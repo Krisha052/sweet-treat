@@ -8,6 +8,7 @@ func _ready() -> void:
 
 func open(order: Order) -> void:
 	$Root/RecipePage/DishIcon.texture = order.recipe_data.icon
+	$Root/RecipePage/RecipeName.text = order.recipe_data.display_name
 	_build_list(order.recipe_data)
 	var tw := create_tween()
 	tw.tween_property($Root, "modulate:a", 1.0, 0.2)

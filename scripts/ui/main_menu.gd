@@ -1,6 +1,6 @@
 extends Control
 
-const MAX_LEVEL_INDEX := 49  # level_50 is the last (0-based)
+const MAX_LEVEL_INDEX := 99  # level_100 is the last (0-based)
 
 func _ready() -> void:
 	$StartButton.pressed.connect(_on_start_pressed)

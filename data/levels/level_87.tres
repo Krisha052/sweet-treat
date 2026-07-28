@@ -1,0 +1,14 @@
+[gd_resource type="Resource" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/level_config.gd" id="1_lv87"]
+[ext_resource type="Resource" path="res://data/recipes/raspberry_cake.tres" id="2_lv87"]
+[ext_resource type="Resource" path="res://data/recipes/strawberry_cake.tres" id="3_lv87"]
+[ext_resource type="Resource" path="res://data/recipes/bread.tres" id="4_lv87"]
+[ext_resource type="Resource" path="res://data/recipes/raspberry_cake_x2.tres" id="5_lv87"]
+
+[resource]
+script = ExtResource("1_lv87")
+level_id = 86
+time_limit_seconds = 180.0
+max_simultaneous_orders = 6
+recipe_pool = Array[RecipeData]([ExtResource("2_lv87"), ExtResource("2_lv87"), ExtResource("2_lv87"), ExtResource("2_lv87"), ExtResource("2_lv87"), ExtResource("2_lv87"), ExtResource("2_lv87"), ExtResource("2_lv87"), ExtResource("3_lv87"), ExtResource("3_lv87"), ExtResource("3_lv87"), ExtResource("3_lv87"), ExtResource("3_lv87"), ExtResource("3_lv87"), ExtResource("3_lv87"), ExtResource("3_lv87"), ExtResource("4_lv87"), ExtResource("4_lv87"), ExtResource("4_lv87"), ExtResource("4_lv87"), ExtResource("4_lv87"), ExtResource("4_lv87"), ExtResource("4_lv87"), ExtResource("4_lv87"), ExtResource("5_lv87"), ExtResource("5_lv87"), ExtResource("5_lv87"), ExtResource("5_lv87"), ExtResource("5_lv87"), ExtResource("5_lv87"), ExtResource("5_lv87")])

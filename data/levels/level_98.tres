@@ -1,0 +1,16 @@
+[gd_resource type="Resource" load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/level_config.gd" id="1_lv98"]
+[ext_resource type="Resource" path="res://data/recipes/chocolate_cake.tres" id="2_lv98"]
+[ext_resource type="Resource" path="res://data/recipes/sugar_cake.tres" id="3_lv98"]
+[ext_resource type="Resource" path="res://data/recipes/dorayaki.tres" id="4_lv98"]
+[ext_resource type="Resource" path="res://data/recipes/purin.tres" id="5_lv98"]
+[ext_resource type="Resource" path="res://data/recipes/strawberry_daifuku.tres" id="6_lv98"]
+[ext_resource type="Resource" path="res://data/recipes/strawberry_cake.tres" id="7_lv98"]
+
+[resource]
+script = ExtResource("1_lv98")
+level_id = 97
+time_limit_seconds = 180.0
+max_simultaneous_orders = 6
+recipe_pool = Array[RecipeData]([ExtResource("2_lv98"), ExtResource("2_lv98"), ExtResource("2_lv98"), ExtResource("2_lv98"), ExtResource("2_lv98"), ExtResource("2_lv98"), ExtResource("3_lv98"), ExtResource("3_lv98"), ExtResource("3_lv98"), ExtResource("3_lv98"), ExtResource("3_lv98"), ExtResource("3_lv98"), ExtResource("4_lv98"), ExtResource("4_lv98"), ExtResource("4_lv98"), ExtResource("4_lv98"), ExtResource("4_lv98"), ExtResource("4_lv98"), ExtResource("5_lv98"), ExtResource("5_lv98"), ExtResource("5_lv98"), ExtResource("5_lv98"), ExtResource("5_lv98"), ExtResource("5_lv98"), ExtResource("6_lv98"), ExtResource("6_lv98"), ExtResource("6_lv98"), ExtResource("6_lv98"), ExtResource("6_lv98"), ExtResource("6_lv98"), ExtResource("7_lv98"), ExtResource("7_lv98"), ExtResource("7_lv98"), ExtResource("7_lv98"), ExtResource("7_lv98")])

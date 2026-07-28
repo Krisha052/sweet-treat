@@ -1,0 +1,13 @@
+[gd_resource type="Resource" load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/level_config.gd" id="1_lv75"]
+[ext_resource type="Resource" path="res://data/recipes/dorayaki.tres" id="2_lv75"]
+[ext_resource type="Resource" path="res://data/recipes/purin.tres" id="3_lv75"]
+[ext_resource type="Resource" path="res://data/recipes/waffles.tres" id="4_lv75"]
+
+[resource]
+script = ExtResource("1_lv75")
+level_id = 74
+time_limit_seconds = 180.0
+max_simultaneous_orders = 6
+recipe_pool = Array[RecipeData]([ExtResource("2_lv75"), ExtResource("2_lv75"), ExtResource("2_lv75"), ExtResource("2_lv75"), ExtResource("2_lv75"), ExtResource("2_lv75"), ExtResource("2_lv75"), ExtResource("2_lv75"), ExtResource("2_lv75"), ExtResource("3_lv75"), ExtResource("3_lv75"), ExtResource("3_lv75"), ExtResource("3_lv75"), ExtResource("3_lv75"), ExtResource("3_lv75"), ExtResource("3_lv75"), ExtResource("3_lv75"), ExtResource("3_lv75"), ExtResource("4_lv75"), ExtResource("4_lv75"), ExtResource("4_lv75"), ExtResource("4_lv75"), ExtResource("4_lv75"), ExtResource("4_lv75"), ExtResource("4_lv75"), ExtResource("4_lv75"), ExtResource("4_lv75")])

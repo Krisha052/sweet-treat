@@ -1,18 +1,13 @@
-[gd_resource type="Resource" load_steps=9 format=3]
+[gd_resource type="Resource" load_steps=4 format=3]
 
 [ext_resource type="Script" path="res://scripts/resources/level_config.gd" id="1_lv47"]
-[ext_resource type="Resource" path="res://data/recipes/bread.tres" id="2_lv47"]
-[ext_resource type="Resource" path="res://data/recipes/waffles.tres" id="3_lv47"]
-[ext_resource type="Resource" path="res://data/recipes/pancakes.tres" id="4_lv47"]
-[ext_resource type="Resource" path="res://data/recipes/berry_pancakes.tres" id="5_lv47"]
-[ext_resource type="Resource" path="res://data/recipes/cream_pancakes.tres" id="6_lv47"]
-[ext_resource type="Resource" path="res://data/recipes/waffles_x2.tres" id="7_lv47"]
-[ext_resource type="Resource" path="res://data/recipes/bread_x2.tres" id="8_lv47"]
-[ext_resource type="Resource" path="res://data/recipes/pancakes_x2.tres" id="9_lv47"]
+[ext_resource type="Resource" path="res://data/recipes/chocolate_cake.tres" id="2_lv47"]
+[ext_resource type="Resource" path="res://data/recipes/sugar_cake.tres" id="3_lv47"]
+[ext_resource type="Resource" path="res://data/recipes/caramel_latte.tres" id="4_lv47"]
 
 [resource]
 script = ExtResource("1_lv47")
 level_id = 46
-time_limit_seconds = 29.0
+time_limit_seconds = 120.0
 max_simultaneous_orders = 6
-recipe_pool = Array[RecipeData]([ExtResource("2_lv47"), ExtResource("3_lv47"), ExtResource("3_lv47"), ExtResource("4_lv47"), ExtResource("4_lv47"), ExtResource("5_lv47"), ExtResource("5_lv47"), ExtResource("6_lv47"), ExtResource("7_lv47"), ExtResource("7_lv47"), ExtResource("8_lv47"), ExtResource("9_lv47"), ExtResource("9_lv47")])
+recipe_pool = Array[RecipeData]([ExtResource("2_lv47"), ExtResource("2_lv47"), ExtResource("2_lv47"), ExtResource("2_lv47"), ExtResource("2_lv47"), ExtResource("2_lv47"), ExtResource("3_lv47"), ExtResource("3_lv47"), ExtResource("3_lv47"), ExtResource("3_lv47"), ExtResource("3_lv47"), ExtResource("3_lv47"), ExtResource("4_lv47"), ExtResource("4_lv47"), ExtResource("4_lv47"), ExtResource("4_lv47"), ExtResource("4_lv47")])

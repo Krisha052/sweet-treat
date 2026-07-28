@@ -18,7 +18,7 @@
 
 **Business Model:** Free-to-play, supported by ads (banner, interstitial, and rewarded). *(Interstitial implemented on Android with test ads; banner and rewarded not yet — see Section 5, Phase 5 status.)*
 
-**Target release scope:** 50 levels. *(All 50 implemented — see Section 6.)*
+**Target release scope:** 100 levels. *(All 100 implemented — see Section 3.)*
 
 **Team:** Solo developer.
 
@@ -30,11 +30,9 @@
 
 **Board:** A grid on the chopping-board asset, filled independently at random from the current level's eligible ingredient set (the union of ingredients across that level's `recipe_pool`). Duplicate ingredients across slots are allowed and expected.
 
-Board dimensions vary by level tier:
-- **Tiers 1–4 (Levels 1–42):** 6×6 grid (36 slots)
-- **Tier 5 / Endgame (Levels 43–50):** 8×6 grid (48 slots, wider not taller)
+**Board size:** 6×6 grid (36 slots) for all 100 levels — no per-level size variation in the current content (an earlier design used an 8×6 endgame board; that was reverted, see Section 3).
 
-`BOARD_ROWS`/`BOARD_COLS` are per-level fields on `LevelConfig` (defaulting to 6/6), not hardcoded constants. The entire layout chain (board origin, ChoppingBoard positioning, hit-targets, card-row) derives from these values at runtime so changing board size per level requires no additional layout work.
+`BOARD_ROWS`/`BOARD_COLS` are per-level fields on `LevelConfig` (defaulting to 6/6), not hardcoded constants, so per-level board size remains fully supported architecturally even though nothing currently uses a non-default value. The entire layout chain (board origin, ChoppingBoard positioning, hit-targets, card-row) derives from these values at runtime so changing board size per level requires no additional layout work.
 
 **Selection model:** Tapping an ingredient toggles its selected state (olive-green tint `#8a8f13` via `modulate`, applied to the `Sprite2D` child only — the `CollisionShape2D` is a sibling and its scale is unaffected). Selected ingredients go into a shared `_selected_pool` (tracked by object identity). Tapping a selected ingredient again deselects it and removes it from the pool. No ingredient is ever committed to a specific order at tap time.
 
@@ -48,13 +46,13 @@ Tie-break (multiple orders simultaneously satisfied by a single tap): complete o
 
 **Force-placement fallback (Bug B fix):** If 20 re-roll attempts all fail, instead of silently accepting an unsatisfiable board, the system force-places the minimum missing ingredients for the single active order with the smallest total deficit. Spill slots (when the deficit needs more slots than were just consumed) exclude both the just-consumed set and any slot currently selected by the player toward another order. If no eligible spill slot exists, `push_warning` fires and the existing worst-case behavior applies (no partial placement).
 
-**Ingredient hit-targets:** `CollisionShape2D` native radius = 81px. Root node scale = 0.80 (affects collision). `Sprite2D` local scale = 0.875 (net visual 0.70, visual-only). Effective hit diameter = 81 × 0.80 × 2 = **130px** at 6×6. At 8×6 (Tier 5), effective hit diameter = **120px** (7.9mm physical, above 7mm minimum comfortable tap threshold). Cell size = 125px at 6×6.
+**Ingredient hit-targets:** `CollisionShape2D` native radius = 81px. Root node scale = 0.80 (affects collision). `Sprite2D` local scale = 0.875 (net visual 0.70, visual-only). Effective hit diameter = 81 × 0.80 × 2 = **130px** at 6×6 (the only board size currently in use). Cell size = 125px at 6×6.
 
 **Dish cards:** Displayed below the chopping board in an `HFlowContainer` supporting two rows (544px total height allocation). Cards are 270×270px; 4 cards fill one row exactly (4×270=1080px). A 5th card wraps to row 2. The dish-card row's position is computed at runtime from the board's actual pixel bounds via `hud.gd`'s `position_card_row()`, with a 150px gap between board bottom and card row top.
 
 **Recipe Frame:** Tapping a dish card opens the Recipe Frame — a full-screen modal. Timer continues running. Dish-card row is explicitly hidden while open, restored on close. Exit via a dedicated "X" close button (top-right of card, 60×69px, anchored 10px inside the card's inner visible border). Ingredient count text (x1, x2) uses `IngredientList.anchor_left = 0.13`. Transition: fade in/out.
 
-**Game Complete Screen:** Shown when a player wins the final available level (currently Level 8, expanding to 50 post-content-build). Fully static — no button, no interaction. Layout: `#ddab79` background, `cafe.png` backdrop, Sweet Treat logo, static label "You completed all levels!" in `quaver.ttf`. Triggered from `_begin_win_sequence()` when no next level file exists, and from `main_menu.gd` when `unlocked_level_index > MAX_LEVEL_INDEX`.
+**Game Complete Screen:** Shown when a player wins the final available level (Level 100). Fully static — no button, no interaction. Layout: `#ddab79` background, `cafe.png` backdrop, Sweet Treat logo, static label "You completed all levels!" in `quaver.ttf`. Triggered from `_begin_win_sequence()` when no next level file exists, and from `main_menu.gd` when `unlocked_level_index > MAX_LEVEL_INDEX`.
 
 **Fail Condition:** Timer runs out before all orders complete → level failed, must retry.
 
@@ -72,11 +70,7 @@ Tie-break (multiple orders simultaneously satisfied by a single tap): complete o
 
 **Multiplier ceiling:** 2x maximum. 3x multipliers have been dropped — at 3x, individual orders statistically exceed the board's expected supply for their ingredient type in nearly every tested scenario, making force-placement fire before the player can even attempt to complete the order.
 
-**Difficulty levers (in order of introduction across 50 levels):**
-1. Number of simultaneous orders queued
-2. Time limit per level (tighter as levels increase)
-3. Recipe pool size per level (more variety = more ingredient types on board = lower per-type supply)
-4. 2x batch multiplier on select recipes (introduced at Tier 4, Levels 35–42)
+**Difficulty levers:** primarily **total orders required to win the level** (see the 100-level structure below — this is the dominant lever, by design), plus number of simultaneous orders queued (caps at 6) and 2x batch multiplier on select recipes. Ingredient variety (K) is *not* a difficulty lever — it grows only as fast as new recipes are introduced and is otherwise kept as low as the capacity table allows.
 
 **Board capacity constraints (validated — do not propose level configurations that violate these):**
 
@@ -91,37 +85,29 @@ Tie-break (multiple orders simultaneously satisfied by a single tap): complete o
 | 2x multiplier, K=12, 6×8 | ⚠️ Borderline — 1 simultaneous 2x order safe; 2 simultaneous 2x flour orders risks force-placement |
 | 3x multiplier | ❌ Dropped |
 
-**50-Level Tier Structure:**
+**100-Level Structure (superseded the original 50-level/5-tier design on 2026-07-28 — see below):**
 
-**Tier 1 — Onboarding (Levels 1–10):** Existing 8 levels + 2 new. 6×6 board, 1x only.
+**Recipe introduction:** Level 1 starts with 2 recipes (`bread` + `bun` — a free pairing, since `bun` uses the exact same 3 ingredient types as `bread`, so starting with 2 dishes instead of 1 costs zero extra K). One new recipe introduces every 3rd level after that (levels 3, 6, 9, ... 93 — 31 slots for the remaining 31 recipes), landing exactly on all 33 recipes (28 base + 5 `_x2`) by level 93. Levels 94–100 are a pure-mastery finale: no new content, just the hardest scaling against everything already known. New recipes are always introduced clustered by theme (Classic Bakery → Fruit Cakes → Café/Coffee → Specialty Drinks → Cakes/Confections → Waffles & Pancakes → Japanese Treats → the 5 `_x2` doubled recipes, in that order — see Section 4's pool table) and always mixed into a pool with already-known recipes, never alone.
 
-| Level | Simul. orders | Pool size | K | Time |
-|---|---|---|---|---|
-| 1 | 1 | 2 | 3 | 90s |
-| 2 | 2 | 3 | 4 | 80s |
-| 3 | 2 | 3 | 4 | 75s |
-| 4 | 3 | 3 | 5 | 70s |
-| 5 | 3 | 3 | 5 | 65s |
-| 6 | 4 | 4 | 6 | 60s |
-| 7 | 4 | 4 | 6 | 55s |
-| 8 | 5 | 5 | 7 | 45s |
-| 9 | 5 | 5 | 7 | 42s |
-| 10 | 5 | 5 | 7 | 40s |
+**Timer bands (flat, not gradually tightening):**
+- Levels 1–30: 90s
+- Levels 31–60: 120s
+- Levels 61–100: 180s
 
-**Tier 2 — Ramping (Levels 11–22):** New recipes introduced, **at most 2 never-before-seen recipes per level, always mixed into a pool of already-known recipes** (never a new-dish-only pool). K stays ≤8. 6×6, 1x only.
+**`max_simultaneous_orders`:** ramps 1 (L1–2) → 2 (L3–5) → 3 (L6–9) → 4 (L10–14) → 5 (L15–22) → 6 (L23–100, held for the remaining 78 levels — deliberately capped rather than kept climbing).
 
-**Tier 3 — Sustained Pressure (Levels 23–34):** Levels 23–27 finish introducing the last few new recipes (same ≤2-per-level, always-mixed rule). Levels 28–34 introduce no new recipes at all — they're pure "mastery" levels that escalate purely via total orders and simultaneous-order count against pools the player already knows. Full 6 simultaneous orders. K must stay ≤8. 6×6.
+**Total orders to win** (`recipe_pool` array length — see implementation note below): linear ramp within each timer band, stepping up at each band boundary since the extra time budget affords it:
+- Band 1 (L1–30): 3 → 12
+- Band 2 (L31–60): 13 → 20
+- Band 3 (L61–100): 22 → 36
 
-**Tier 4 — 2x Multiplier (Levels 35–42):** 2x requires K≤6 on 6×6 board. Pools mix old and new recipes (e.g. `bread, bun, croissant, cherry_cake, coconut_cake, raspberry_cake` — 5 old + 1 new, K=6), and the *doubled* recipes specifically are also a mix of old and new dishes (`cherry_cake_x2`, `bread_x2` alongside `raspberry_cake_x2`) rather than only-old. 6×6.
+Calibrated against the original hand-built levels' own pace (level 8: 5 orders / 45s ≈ 9s/order) — band 1 finishes around 7.5s/order, band 2 around 6s/order, band 3's finale around 5s/order. Tightens gradually without becoming inhuman.
 
-**Tier 5 — Endgame (Levels 43–50):** 6×6 board (not 8×6 — see implementation note below). 2x multiplier continues, still K≤6 (the 8×6 board's looser K≤10 headroom no longer applies), again mixing old and new base recipes and old and new doubled recipes (`bread, waffles, pancakes, berry_pancakes, cream_pancakes` base pool, K=6; `bread_x2` mixed with `waffles_x2`/`pancakes_x2`).
+**Implementation status (Levels 1–100):** All 100 levels are built (`data/levels/level_01.tres`–`level_100.tres`), fully replacing the original 50-level/5-tier structure (levels 1–8 included — the original hand-built onboarding levels were rebuilt too, for consistency with the new flat-timer-band + every-3rd-level cadence). Two mechanics carried over unchanged from the 50-level build and are worth restating since they're not obvious from the numbers above:
 
-**Implementation status (Levels 9–50):** All 50 levels are built (`data/levels/level_09.tres`–`level_50.tres`). The design actually shipped diverges from the pool-size/K table structure above in a way that matters enough to call out explicitly — it replaced the original numeric tier tables after a developer playtest round (2026-07-27) found the original approach overwhelming:
-
-- **Pool size ("recipe_pool" array length) is not "distinct recipe variety" — it's literally the total number of orders required to win the level** (`OrderManager._total_orders = config.recipe_pool.size()`; see `scripts/gameplay/order_manager.gd`). The original Tier 2–5 tables conflated these two things: escalating "pool size" always meant both *more orders to complete* and *more brand-new dishes at once*, which is what made early Tier 2/3 levels (e.g. the original Level 11, Level 15) feel overwhelming — 5-6 simultaneous orders where every single recipe was one the player had never seen.
-- **The fix:** total-orders-to-win now scales via **duplicate entries** of already-known recipes in the pool array (e.g. `[espresso, espresso, espresso, caramel_latte, hot_chocolate]` — 5 total orders, but only 3 *distinct* recipes, 2 of them new). Distinct-recipe-count (and therefore K) grows slowly and separately, capped at 2 newly-introduced recipes per level, always mixed with recipes the player already knows. Levels 28–34 and the back half of Tiers 4–5 introduce zero new recipes and scale difficulty purely through order count and simultaneous-order count against known pools.
-- **Tier 5's board reverted to 6×6.** The original plan used an 8×6 (48-slot) board specifically to afford K up to 10–12 for 2x pools. Per-level board-size variation was cut as a design decision (not a technical limitation — `board_cols`/`board_rows` per `LevelConfig` still works) — Tier 5 now uses the same K≤6 2x-safe ceiling as Tier 4, just with a different mixed old+new recipe pool for variety.
-- **The 2x batch multiplier still has no engine support** (unchanged from the original build — see below) — it's faked via separate `_x2` `RecipeData` resources with doubled ingredient counts. What's new: each `_x2` recipe now has **its own icon** (base dish art with a composited "×2" badge, e.g. `CherryCakeX2.png`) instead of reusing the base recipe's icon, so a doubled order is visually distinguishable on the dish card without opening the Recipe Frame. Current `_x2` set: `bread_x2`, `cherry_cake_x2`, `raspberry_cake_x2`, `waffles_x2`, `pancakes_x2` (2 old, 1 new, 2 new — deliberately mixed per the Tier 4/5 pool rule above).
+- **`recipe_pool` array length is not "distinct recipe variety" — it's literally the total number of orders required to win the level** (`OrderManager._total_orders = config.recipe_pool.size()`; see `scripts/gameplay/order_manager.gd`). Total-orders-to-win scales via **duplicate entries** of already-known recipes in the pool array (e.g. `[espresso, espresso, espresso, caramel_latte]` — 4 total orders, 2 distinct recipes). This is *the* difficulty lever by design; distinct-recipe-count (and therefore K) grows only when a new recipe is introduced, capped at exactly 1 per introduction level (2 at level 1), always mixed with already-known recipes.
+- **The 2x batch multiplier still has no engine support** — it's faked via separate `_x2` `RecipeData` resources with doubled ingredient counts, each with its own icon (base dish art plus a composited "×2" badge, e.g. `CherryCakeX2.png`) so a doubled order is visually distinguishable from the dish card alone. The 5 `_x2` recipes are introduced like any other recipe in the schedule above (levels 81–93), each paired with a small hand-picked K-safe companion set (e.g. `waffles_x2` pools with `waffles, pancakes, bread` rather than the full 8-recipe Waffles & Pancakes cluster, which would blow past the K≤6 ceiling required for any pool containing an `_x2` recipe) rather than a dedicated late-game "2x tier."
+- Board stays 6×6 throughout all 100 levels — no per-level size changes.
 
 **Win/Lose Condition:** Pass/fail only — no star ratings. Won = all orders complete before timer. Lost = timer runs out.
 
@@ -148,19 +134,20 @@ An earlier round of this doc proposed 6 new ingredients (Matcha, Chocolate, Crea
 - **A 7th ingredient (Raspberry) arrived**, needed for a Raspberry Cake recipe (repurposing the original strawberry_cake dish icon after strawberry_cake got new art — see asset swap note below).
 - **Only 6 of the 14 planned recipes had matching art** (Caramel Latte, Chocolate Cake, Honey Tea, Hot Chocolate, Matcha Latte, Sugar Cake). The other 8 (Matcha Cake, Caramel Cake, Strawberry Cream, Cherry Cream, Coconut Cream, Cream Puff, Butter Biscuit, Chocolate Croissant) have no art and were dropped. In their place, **12 new dish images arrived that weren't in the original plan at all** — a waffle/pancake family (Waffles, Berry/Chocolate/Strawberry Waffles, Pancakes, Berry/Chocolate/Cream Pancakes) and a Japanese-dessert family (Dorayaki, Purin, Strawberry Daifuku) — so the recipe set was redesigned around the art that actually exists rather than the original 14.
 
-**Recipe pools (thematic clusters, referenced by Section 3's tier tables):**
+**Recipe pools (thematic clusters, introduced in this order across the 100-level structure in Section 3):**
 
-| Pool | Recipes | K (distinct ingredient types) | Tier usage |
+| Pool | Recipes | K (distinct ingredient types) | Introduced |
 |---|---|---|---|
-| Classic Bakery | bread, bun, croissant, cherry_cake, coconut_cake, coffee_cake, strawberry_cake | 7 (flour, milk, egg, cherry, coconut, bean_medium_roast, strawberry) | Tier 1 (unchanged) |
-| Café/Coffee | cappuccino, espresso, latte | 7 (bean_light/medium/dark/raw, milk, foam, red_tea) | Tier 1, Tier 2 intro levels (paired 1:1 with new drinks) |
-| Fruit Cakes | strawberry_cake, raspberry_cake | 4 (+raspberry) | Tier 1 (L9–10) — cheapest possible new-ingredient intro |
-| Specialty Drinks | caramel_latte, hot_chocolate, matcha_latte, honey_tea | 8 total across the whole cluster, but never mixed together in one pool — introduced 2-at-a-time paired with one old café recipe (K=7–8 per pairing) | Tier 2 (L11–14) |
-| Cakes/Confections | chocolate_cake, sugar_cake | introduced 2-at-a-time paired with croissant (K=6) | Tier 2 (L15–16), Tier 3 mastery pool (L31–34, joined by dorayaki/purin/strawberry_daifuku/strawberry_cake, K=8) |
-| Waffles & Pancakes | waffles, berry_waffles, chocolate_waffles, strawberry_waffles, pancakes, berry_pancakes, chocolate_pancakes, cream_pancakes | 8 (flour, egg, milk, butter, raspberry, chocolate, strawberry, cream) | Tier 2–3 mastery pool (Levels 28–30) — the best-fitting pool for "6+ recipes at K≤8" |
-| Japanese Treats | dorayaki, purin, strawberry_daifuku | 7 (flour, egg, milk, chocolate, sugar, caramel, strawberry) | Tier 2–3 |
-| Tier 4 mixed (old+new base) | bread, bun, croissant, cherry_cake, coconut_cake, raspberry_cake | 6 (flour, milk, egg, cherry, coconut, raspberry) | Tier 4 (L35–42), with `cherry_cake_x2`/`bread_x2`/`raspberry_cake_x2` mixed in as the doubled set |
-| Tier 5 mixed (old+new base) | bread, waffles, pancakes, berry_pancakes, cream_pancakes | 6 (flour, milk, egg, butter, raspberry, cream) | Tier 5 (L43–50), with `bread_x2`/`waffles_x2`/`pancakes_x2` mixed in as the doubled set |
+| Classic Bakery | bread, bun, croissant, cherry_cake, coconut_cake, coffee_cake | 6 (flour, milk, egg, cherry, coconut, bean_medium_roast) | Levels 1 (bread+bun), 3, 6, 9, 12 |
+| Fruit Cakes | strawberry_cake, raspberry_cake | 4 (+strawberry, raspberry) | Levels 15, 18 |
+| Café/Coffee | cappuccino, espresso, latte | 7 (bean_light/medium/dark/raw, milk, foam, red_tea) | Levels 21, 24, 27 |
+| Specialty Drinks | caramel_latte, hot_chocolate, matcha_latte, honey_tea | 8 (bean_dark, caramel, cream, chocolate, milk, matcha, foam, red_tea) | Levels 30, 33, 36, 39 |
+| Cakes/Confections | chocolate_cake, sugar_cake | 4 (chocolate, cream, sugar, egg) | Levels 42, 45 |
+| Waffles & Pancakes | waffles, berry_waffles, chocolate_waffles, strawberry_waffles, pancakes, berry_pancakes, chocolate_pancakes, cream_pancakes | 8 (flour, egg, milk, butter, raspberry, chocolate, strawberry, cream) | Levels 48, 51, 54, 57, 60, 63, 66, 69 |
+| Japanese Treats | dorayaki, purin, strawberry_daifuku | 7 (flour, egg, milk, chocolate, sugar, caramel, strawberry) | Levels 72, 75, 78 |
+| Doubled (`_x2`) | bread_x2, cherry_cake_x2, raspberry_cake_x2, waffles_x2, pancakes_x2 | Each paired with a small hand-picked K-safe companion set (K≤6), not the full base cluster | Levels 81, 84, 87, 90, 93 |
+
+Levels 94–100 rotate through 3 mastery pools with no new content: the full Waffles & Pancakes cluster (K=8), a Cakes/Japanese combo (chocolate_cake, sugar_cake, dorayaki, purin, strawberry_daifuku, strawberry_cake — K=8), and a mixed old+new doubled combo (bread, bun, cherry_cake, coconut_cake, raspberry_cake, cherry_cake_x2, raspberry_cake_x2 — K=6).
 
 Dorayaki's traditional red-bean filling has no equivalent ingredient in this game (the `bean_*` ingredients are coffee beans, not azuki) — it's built as a chocolate-filled pancake sandwich instead. Strawberry Daifuku uses `flour` as a stand-in for mochi rice flour, consistent with how `flour` is already used generically elsewhere.
 
@@ -217,14 +204,16 @@ This is a real divergence from the earlier plan's goal (which aimed to shrink fl
 - Background: `#544541`
 - Level indicator (top-left): `#ddab79` text, `font_size=50`, static
 - Timer (top-right): `#ddab79` pill background, `#544541` text
-- Chopping board: 6×6 grid (Tiers 1–4) or 8×6 grid (Tier 5); `origin_y = vp.y × 0.22`; `CELL=125`
+- Chopping board: 6×6 grid (all 100 levels); `origin_y = vp.y × 0.22`; `CELL=125`
 - Dish cards: below board, two-row `HFlowContainer` (544px height allocation), 4 cards per row at 270×270px
 
 **Recipe Frame:**
 - Background: `#544541`
 - Recipe card (`recipe_page.png`) centered, 864×1116px canvas units
 - Close button: 60×69px, anchored 10px inside inner card border (anchor_left=0.8961, anchor_right=0.9655, anchor_top=0.0412, anchor_bottom=0.1033)
-- Ingredient list: `IngredientList.anchor_left=0.13` (count text), `anchor_right=0.90` (icon column)
+- Dish icon: `DishIcon.anchor_top=0.02` → `anchor_bottom=0.28`
+- Recipe name: `RecipeName` label, anchor_top=0.30 → 0.365, Quaver font size 56, centered — inserted below the icon; preserves the original 0.02-anchor icon→content gap on both sides (icon→name and name→ingredients)
+- Ingredient list: `IngredientList.anchor_top=0.385` (shifted down to make room for the name label), `anchor_left=0.13` (count text), `anchor_right=0.90` (icon column)
 - Timer/level indicator stay visible; dish-card row hidden while open
 
 **Game Over Frame:**
@@ -321,9 +310,9 @@ data/ingredients/, data/recipes/, data/levels/ — .tres resources
 | 3 — Content (12 ingredients, 10 recipes, 8 levels) | ✅ Done |
 | 4 — UI/art polish, responsive layout | ✅ Done (confirmed working on-device) |
 | 4b — Order completion redesign (selection-pool model) | ✅ Done (commit `4569cee`) |
-| 4c — Variable board size architecture (per-level `board_cols`/`board_rows`) | ✅ Done (endgame Tier 5 levels now use it, see Phase 6) |
+| 4c — Variable board size architecture (per-level `board_cols`/`board_rows`) | ✅ Done (architecture only — all 100 shipped levels currently use the 6×6 default) |
 | 5 — AdMob integration | 🟨 Partial — interstitial done (Android, test ads); banner and rewarded deferred, see Section 5/8 |
-| 6 — Content build (Levels 9–50, new recipes/ingredients) | ✅ Done (19 ingredients, 33 recipes, 50 levels; see Section 4). 2x multiplier is a data-only fake, not a real engine feature — see Section 3 implementation note. Levels 11–50 reworked 2026-07-27 after developer playtest (see Document History). |
+| 6 — Content build (100 levels, new recipes/ingredients) | ✅ Done (19 ingredients, 33 recipes, 100 levels; see Section 4). 2x multiplier is a data-only fake, not a real engine feature — see Section 3 implementation note. Expanded from 50 to 100 levels on 2026-07-28 with a new every-3rd-level introduction cadence, replacing the prior 5-tier structure (see Document History). |
 
 **Key commits for reference:**
 - `c4192db` — touch/mouse debounce guard (`ingredient.gd`)
@@ -344,7 +333,7 @@ data/ingredients/, data/recipes/, data/levels/ — .tres resources
 | 2x multiplier is a data-only fake, not a real engine feature | `_x2` RecipeData resources (doubled ingredient counts, own badged icon) stand in for a real batch-multiplier mechanic that was never built (`LevelConfig`/`OrderManager` have no multiplier field). Works fine with existing completion-check/UI logic, but if a proper multiplier system is ever built (dynamic scaling instead of fixed doubled recipes), the 5 `_x2` resources should be revisited. |
 | `recipe_pool.size()` doubles as both variety and total-orders-to-win | Non-obvious `OrderManager` behavior (`_total_orders = config.recipe_pool.size()`) that shaped a full level-design rework after a 2026-07-27 playtest — see Section 3's implementation note. Any future level curation should keep treating "total orders" (pool array length, padded with duplicate known-recipe entries) and "how many recipes are new to the player" as separate levers, not one. |
 | Caramel icon aesthetic mismatch | `caramel.png` and `CaramelLatte.png` flagged by the developer as not matching the rest of the game's art style. No replacement art provided yet — open item, not a code/data problem. |
-| flour/egg remain the dominant ingredients across all 33 recipes (69.7%/63.6%) | The art that arrived for the Levels 9–50 content build skewed toward waffle/pancake/bakery dishes rather than the cream-based confections an earlier version of this doc planned around, so flour/egg concentration didn't drop the way that plan intended. Not a violation of any per-level K constraint (every level 9–50 is individually validated — see Section 3), but worth knowing when curating future pools: flour/egg supply is the first thing to check. |
+| flour/egg remain the dominant ingredients across all 33 recipes (69.7%/63.6%) | The art that arrived for this content build skewed toward waffle/pancake/bakery dishes rather than the cream-based confections an earlier version of this doc planned around, so flour/egg concentration didn't drop the way that plan intended. Not a violation of any per-level K constraint (every one of the 100 levels is individually validated — see Section 3), but worth knowing when curating future pools: flour/egg supply is the first thing to check. |
 | Dead space below card row on tall phones | 491–584px empty at 21:9. Not a bug — the card row is correctly positioned relative to the board. Worth revisiting post-launch whether to use this space (e.g. slightly taller board on tall phones). |
 | Recipe-match selection weighting | When multiple database recipes are completable from the current board, the next dish card is chosen fully at random among valid matches. Weighting to avoid recently-seen dishes repeating is a possible UX improvement — not decided, deferred. |
 | No tutorial in shipped game | Players learn tap-to-select + Recipe Frame by trial. Consider a simple guided Level 1 experience post-MVP. Beta test (see [`beta_testing/BETA_TEST_PLAN.md`](beta_testing/BETA_TEST_PLAN.md)) Q4 directly measures this. |
@@ -393,3 +382,4 @@ These are established patterns from the project's development history. Continue 
 | July 26, 2026 | Content build complete: 7 new ingredients (matcha, chocolate, cream, butter, sugar, caramel, raspberry) and 24 new recipes added (19 ingredients / 34 recipes total); Levels 9–50 authored across all 5 tiers; `MAX_LEVEL_INDEX` updated to 49. Recipe set diverged from the earlier 24-recipe plan since only 6 of 14 previously-proposed recipes had matching art — redesigned around a waffle/pancake family and a Japanese-dessert family that arrived instead (see Section 4). 2x batch multiplier implemented as a data-only fake (`_x2` RecipeData resources) since no engine-level multiplier field exists. Asset swaps: strawberry_cake got new icon art, old strawberry-cake art repurposed for new raspberry_cake recipe, milk ingredient got new carton art. |
 | July 27, 2026 | Developer playtest round on the 50-level build produced a full Tier 2–5 level-design rework (Levels 11–50 regenerated, now 33 recipes total after removing 4 unused `_x2` resources and adding 3 new ones). Root cause found: `recipe_pool.size()` is literally total-orders-to-win, not just variety, so the original design conflated "more orders" with "more brand-new dishes" — new levels now cap new-recipe introduction at 2/level always mixed with known recipes, and scale difficulty via duplicate-padded order counts instead. Tier 5 board reverted from 8×6 to 6×6 (developer decision); Tier 4/5 2x pools now mix old and new recipes (both as base pool and as the doubled set specifically), each `_x2` recipe got its own "×2"-badged icon. Asset fixes: milk reverted to original jug art, chocolate ingredient swapped to new developer-provided source art, off-center new dish icons (waffle family, hot chocolate) recentered, caramel/CaramelLatte icons flagged for future replacement. Also fixed stale Android package name (`com.example.sweettreat` → `com.sweettreat.app`) in this doc. |
 | July 28, 2026 | Phase 5 (AdMob) partially implemented: interstitial ads wired up on Android using `godot-sdk-integrations/godot-admob` v7.0, running on Google's test ad unit IDs (no live AdMob account yet). `AdManager` converted from a script-only autoload to a scene (`ad_manager.tscn`) wrapping an `Admob` child node; `show_interstitial()` preloads ahead of time, shows only if ready, and always lets scene transitions continue even if no ad is available. Wired into both existing TODO points (Game Over → Restart, Level Complete → Next Level). Required enabling Godot's Custom Gradle Build (`export_presets.cfg`, gitignored/machine-local) since the plugin ships native AAR dependencies. Banner and rewarded ads, real AdMob IDs, GDPR/UMP consent, and iOS config all explicitly deferred — see Section 8. |
+| July 28, 2026 | Expanded from 50 to 100 levels for initial launch, replacing the 5-tier structure entirely (levels 1–8 rebuilt too). New rules: exactly 1 new recipe introduced every 3rd level (2 at level 1 — `bread`+`bun` — so the opener isn't a single-dish bore), flat timer bands (90s/120s/180s per 30-level range) instead of gradual tightening, `max_simultaneous_orders` caps at 6 instead of continuing to climb, and total-orders-to-win (the real difficulty lever, per the July 27 finding) ramps linearly within each band from 3 (L1) to 36 (L100). All 33 existing recipes (28 base + 5 `_x2`) fit exactly into the introduction schedule with no new art needed; levels 94–100 are a pure-mastery finale rotating 3 K-safe pools. `MAX_LEVEL_INDEX` updated to 99. Also added a `RecipeName` label to the Recipe Frame (between the dish icon and ingredient list, preserving the original icon-to-ingredients gap on both sides of the new label) so players can see the dish name without guessing from the icon alone. |

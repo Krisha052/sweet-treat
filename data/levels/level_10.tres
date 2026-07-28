@@ -1,15 +1,15 @@
 [gd_resource type="Resource" load_steps=6 format=3]
 
 [ext_resource type="Script" path="res://scripts/resources/level_config.gd" id="1_lv10"]
-[ext_resource type="Resource" path="res://data/recipes/bun.tres" id="2_lv10"]
-[ext_resource type="Resource" path="res://data/recipes/cherry_cake.tres" id="3_lv10"]
-[ext_resource type="Resource" path="res://data/recipes/coconut_cake.tres" id="4_lv10"]
-[ext_resource type="Resource" path="res://data/recipes/strawberry_cake.tres" id="5_lv10"]
-[ext_resource type="Resource" path="res://data/recipes/raspberry_cake.tres" id="6_lv10"]
+[ext_resource type="Resource" path="res://data/recipes/bread.tres" id="2_lv10"]
+[ext_resource type="Resource" path="res://data/recipes/bun.tres" id="3_lv10"]
+[ext_resource type="Resource" path="res://data/recipes/croissant.tres" id="4_lv10"]
+[ext_resource type="Resource" path="res://data/recipes/cherry_cake.tres" id="5_lv10"]
+[ext_resource type="Resource" path="res://data/recipes/coconut_cake.tres" id="6_lv10"]
 
 [resource]
 script = ExtResource("1_lv10")
 level_id = 9
-time_limit_seconds = 40.0
-max_simultaneous_orders = 5
-recipe_pool = Array[RecipeData]([ExtResource("2_lv10"), ExtResource("3_lv10"), ExtResource("4_lv10"), ExtResource("5_lv10"), ExtResource("6_lv10")])
+time_limit_seconds = 90.0
+max_simultaneous_orders = 4
+recipe_pool = Array[RecipeData]([ExtResource("2_lv10"), ExtResource("2_lv10"), ExtResource("3_lv10"), ExtResource("4_lv10"), ExtResource("5_lv10"), ExtResource("6_lv10")])

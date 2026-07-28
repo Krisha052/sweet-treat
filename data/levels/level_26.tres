@@ -1,14 +1,12 @@
-[gd_resource type="Resource" load_steps=5 format=3]
+[gd_resource type="Resource" load_steps=3 format=3]
 
 [ext_resource type="Script" path="res://scripts/resources/level_config.gd" id="1_lv26"]
-[ext_resource type="Resource" path="res://data/recipes/chocolate_cake.tres" id="2_lv26"]
-[ext_resource type="Resource" path="res://data/recipes/dorayaki.tres" id="3_lv26"]
-[ext_resource type="Resource" path="res://data/recipes/purin.tres" id="4_lv26"]
-[ext_resource type="Resource" path="res://data/recipes/sugar_cake.tres" id="5_lv26"]
+[ext_resource type="Resource" path="res://data/recipes/cappuccino.tres" id="2_lv26"]
+[ext_resource type="Resource" path="res://data/recipes/espresso.tres" id="3_lv26"]
 
 [resource]
 script = ExtResource("1_lv26")
 level_id = 25
-time_limit_seconds = 32.0
+time_limit_seconds = 90.0
 max_simultaneous_orders = 6
-recipe_pool = Array[RecipeData]([ExtResource("2_lv26"), ExtResource("2_lv26"), ExtResource("3_lv26"), ExtResource("3_lv26"), ExtResource("4_lv26"), ExtResource("4_lv26"), ExtResource("5_lv26")])
+recipe_pool = Array[RecipeData]([ExtResource("2_lv26"), ExtResource("2_lv26"), ExtResource("2_lv26"), ExtResource("2_lv26"), ExtResource("2_lv26"), ExtResource("2_lv26"), ExtResource("3_lv26"), ExtResource("3_lv26"), ExtResource("3_lv26"), ExtResource("3_lv26"), ExtResource("3_lv26")])

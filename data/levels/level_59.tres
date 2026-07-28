@@ -1,0 +1,14 @@
+[gd_resource type="Resource" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/level_config.gd" id="1_lv59"]
+[ext_resource type="Resource" path="res://data/recipes/waffles.tres" id="2_lv59"]
+[ext_resource type="Resource" path="res://data/recipes/berry_waffles.tres" id="3_lv59"]
+[ext_resource type="Resource" path="res://data/recipes/chocolate_waffles.tres" id="4_lv59"]
+[ext_resource type="Resource" path="res://data/recipes/strawberry_waffles.tres" id="5_lv59"]
+
+[resource]
+script = ExtResource("1_lv59")
+level_id = 58
+time_limit_seconds = 120.0
+max_simultaneous_orders = 6
+recipe_pool = Array[RecipeData]([ExtResource("2_lv59"), ExtResource("2_lv59"), ExtResource("2_lv59"), ExtResource("2_lv59"), ExtResource("2_lv59"), ExtResource("3_lv59"), ExtResource("3_lv59"), ExtResource("3_lv59"), ExtResource("3_lv59"), ExtResource("3_lv59"), ExtResource("4_lv59"), ExtResource("4_lv59"), ExtResource("4_lv59"), ExtResource("4_lv59"), ExtResource("4_lv59"), ExtResource("5_lv59"), ExtResource("5_lv59"), ExtResource("5_lv59"), ExtResource("5_lv59"), ExtResource("5_lv59")])
