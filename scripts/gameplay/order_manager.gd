@@ -5,6 +5,9 @@ signal order_spawned(order: Order)
 signal order_completed(order: Order, consumed_slots: Array[Ingredient])
 signal all_orders_cleared
 
+const MAX_SELECTED_NORMAL := 4
+const MAX_SELECTED_WITH_DOUBLE := 8
+
 @export var level_config: LevelConfig
 
 var board_node: Node2D
@@ -30,9 +33,20 @@ func toggle_ingredient(slot: Ingredient) -> void:
 		_selected_pool.erase(slot)
 		slot.deselect()
 	else:
+		if _selected_pool.size() >= _max_selectable():
+			slot.reject_flash()
+			return
 		slot.select()
 		_selected_pool.append(slot)
 		_check_completions()
+
+# 4 simultaneous selections normally, 8 while a doubled (_x2) order is active
+# -- doubled orders need roughly twice the ingredients to complete.
+func _max_selectable() -> int:
+	for order in _active_orders:
+		if order.recipe_data.id.ends_with("_x2"):
+			return MAX_SELECTED_WITH_DOUBLE
+	return MAX_SELECTED_NORMAL
 
 func _check_completions() -> void:
 	var found := true

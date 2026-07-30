@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=9 format=3]
+[gd_resource type="Resource" load_steps=15 format=3]
 
 [ext_resource type="Script" path="res://scripts/resources/level_config.gd" id="1_lv71"]
 [ext_resource type="Resource" path="res://data/recipes/waffles.tres" id="2_lv71"]
@@ -9,10 +9,16 @@
 [ext_resource type="Resource" path="res://data/recipes/berry_pancakes.tres" id="7_lv71"]
 [ext_resource type="Resource" path="res://data/recipes/chocolate_pancakes.tres" id="8_lv71"]
 [ext_resource type="Resource" path="res://data/recipes/cream_pancakes.tres" id="9_lv71"]
+[ext_resource type="Resource" path="res://data/recipes/hot_chocolate.tres" id="10_lv71"]
+[ext_resource type="Resource" path="res://data/recipes/strawberry_cake.tres" id="11_lv71"]
+[ext_resource type="Resource" path="res://data/recipes/raspberry_cake.tres" id="12_lv71"]
+[ext_resource type="Resource" path="res://data/recipes/bread.tres" id="13_lv71"]
+[ext_resource type="Resource" path="res://data/recipes/bun.tres" id="14_lv71"]
+[ext_resource type="Resource" path="res://data/recipes/croissant.tres" id="15_lv71"]
 
 [resource]
 script = ExtResource("1_lv71")
 level_id = 70
 time_limit_seconds = 180.0
 max_simultaneous_orders = 6
-recipe_pool = Array[RecipeData]([ExtResource("2_lv71"), ExtResource("2_lv71"), ExtResource("2_lv71"), ExtResource("2_lv71"), ExtResource("3_lv71"), ExtResource("3_lv71"), ExtResource("3_lv71"), ExtResource("3_lv71"), ExtResource("4_lv71"), ExtResource("4_lv71"), ExtResource("4_lv71"), ExtResource("5_lv71"), ExtResource("5_lv71"), ExtResource("5_lv71"), ExtResource("6_lv71"), ExtResource("6_lv71"), ExtResource("6_lv71"), ExtResource("7_lv71"), ExtResource("7_lv71"), ExtResource("7_lv71"), ExtResource("8_lv71"), ExtResource("8_lv71"), ExtResource("8_lv71"), ExtResource("9_lv71"), ExtResource("9_lv71"), ExtResource("9_lv71")])
+recipe_pool = Array[RecipeData]([ExtResource("2_lv71"), ExtResource("2_lv71"), ExtResource("3_lv71"), ExtResource("3_lv71"), ExtResource("4_lv71"), ExtResource("4_lv71"), ExtResource("5_lv71"), ExtResource("5_lv71"), ExtResource("6_lv71"), ExtResource("6_lv71"), ExtResource("7_lv71"), ExtResource("7_lv71"), ExtResource("8_lv71"), ExtResource("8_lv71"), ExtResource("9_lv71"), ExtResource("9_lv71"), ExtResource("10_lv71"), ExtResource("10_lv71"), ExtResource("11_lv71"), ExtResource("11_lv71"), ExtResource("12_lv71"), ExtResource("12_lv71"), ExtResource("13_lv71"), ExtResource("13_lv71"), ExtResource("14_lv71"), ExtResource("15_lv71")])

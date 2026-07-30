@@ -60,3 +60,18 @@ func _flash() -> void:
 	var tween := create_tween()
 	tween.tween_property(self, "scale", _base_scale * 1.35, 0.08)
 	tween.tween_property(self, "scale", _base_scale, 0.15)
+
+## Plays when a tap is rejected (selection cap reached) -- a red-tinted
+## shake, distinct from the neutral _flash() pulse every tap already gets.
+func reject_flash() -> void:
+	var base_pos := position
+	var sprite: Sprite2D = $Sprite2D
+
+	var color_tween := create_tween()
+	color_tween.tween_property(sprite, "modulate", Color("#c0392b"), 0.05)
+	color_tween.tween_property(sprite, "modulate", Color.WHITE, 0.15)
+
+	var shake_tween := create_tween()
+	shake_tween.tween_property(self, "position", base_pos + Vector2(8, 0), 0.04)
+	shake_tween.tween_property(self, "position", base_pos - Vector2(8, 0), 0.08)
+	shake_tween.tween_property(self, "position", base_pos, 0.04)

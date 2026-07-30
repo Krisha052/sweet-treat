@@ -1,16 +1,18 @@
-[gd_resource type="Resource" load_steps=7 format=3]
+[gd_resource type="Resource" load_steps=9 format=3]
 
 [ext_resource type="Script" path="res://scripts/resources/level_config.gd" id="1_lv88"]
-[ext_resource type="Resource" path="res://data/recipes/bread.tres" id="2_lv88"]
-[ext_resource type="Resource" path="res://data/recipes/bun.tres" id="3_lv88"]
-[ext_resource type="Resource" path="res://data/recipes/croissant.tres" id="4_lv88"]
-[ext_resource type="Resource" path="res://data/recipes/cherry_cake.tres" id="5_lv88"]
-[ext_resource type="Resource" path="res://data/recipes/coconut_cake.tres" id="6_lv88"]
-[ext_resource type="Resource" path="res://data/recipes/coffee_cake.tres" id="7_lv88"]
+[ext_resource type="Resource" path="res://data/recipes/raspberry_cake.tres" id="2_lv88"]
+[ext_resource type="Resource" path="res://data/recipes/strawberry_cake.tres" id="3_lv88"]
+[ext_resource type="Resource" path="res://data/recipes/bread.tres" id="4_lv88"]
+[ext_resource type="Resource" path="res://data/recipes/raspberry_cake_x2.tres" id="5_lv88"]
+[ext_resource type="Resource" path="res://data/recipes/cherry_cake.tres" id="6_lv88"]
+[ext_resource type="Resource" path="res://data/recipes/cherry_cake_x2.tres" id="7_lv88"]
+[ext_resource type="Resource" path="res://data/recipes/bun.tres" id="8_lv88"]
+[ext_resource type="Resource" path="res://data/recipes/bread_x2.tres" id="9_lv88"]
 
 [resource]
 script = ExtResource("1_lv88")
 level_id = 87
 time_limit_seconds = 180.0
 max_simultaneous_orders = 6
-recipe_pool = Array[RecipeData]([ExtResource("2_lv88"), ExtResource("2_lv88"), ExtResource("2_lv88"), ExtResource("2_lv88"), ExtResource("2_lv88"), ExtResource("2_lv88"), ExtResource("3_lv88"), ExtResource("3_lv88"), ExtResource("3_lv88"), ExtResource("3_lv88"), ExtResource("3_lv88"), ExtResource("3_lv88"), ExtResource("4_lv88"), ExtResource("4_lv88"), ExtResource("4_lv88"), ExtResource("4_lv88"), ExtResource("4_lv88"), ExtResource("5_lv88"), ExtResource("5_lv88"), ExtResource("5_lv88"), ExtResource("5_lv88"), ExtResource("5_lv88"), ExtResource("6_lv88"), ExtResource("6_lv88"), ExtResource("6_lv88"), ExtResource("6_lv88"), ExtResource("6_lv88"), ExtResource("7_lv88"), ExtResource("7_lv88"), ExtResource("7_lv88"), ExtResource("7_lv88"), ExtResource("7_lv88")])
+recipe_pool = Array[RecipeData]([ExtResource("2_lv88"), ExtResource("2_lv88"), ExtResource("2_lv88"), ExtResource("2_lv88"), ExtResource("2_lv88"), ExtResource("3_lv88"), ExtResource("3_lv88"), ExtResource("3_lv88"), ExtResource("3_lv88"), ExtResource("3_lv88"), ExtResource("4_lv88"), ExtResource("4_lv88"), ExtResource("4_lv88"), ExtResource("5_lv88"), ExtResource("5_lv88"), ExtResource("5_lv88"), ExtResource("5_lv88"), ExtResource("5_lv88"), ExtResource("6_lv88"), ExtResource("6_lv88"), ExtResource("6_lv88"), ExtResource("6_lv88"), ExtResource("7_lv88"), ExtResource("7_lv88"), ExtResource("7_lv88"), ExtResource("7_lv88"), ExtResource("8_lv88"), ExtResource("8_lv88"), ExtResource("8_lv88"), ExtResource("9_lv88"), ExtResource("9_lv88"), ExtResource("9_lv88")])

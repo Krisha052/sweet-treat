@@ -1,13 +1,25 @@
-[gd_resource type="Resource" load_steps=4 format=3]
+[gd_resource type="Resource" load_steps=16 format=3]
 
 [ext_resource type="Script" path="res://scripts/resources/level_config.gd" id="1_lv73"]
 [ext_resource type="Resource" path="res://data/recipes/dorayaki.tres" id="2_lv73"]
 [ext_resource type="Resource" path="res://data/recipes/waffles.tres" id="3_lv73"]
 [ext_resource type="Resource" path="res://data/recipes/berry_waffles.tres" id="4_lv73"]
+[ext_resource type="Resource" path="res://data/recipes/chocolate_waffles.tres" id="5_lv73"]
+[ext_resource type="Resource" path="res://data/recipes/strawberry_waffles.tres" id="6_lv73"]
+[ext_resource type="Resource" path="res://data/recipes/pancakes.tres" id="7_lv73"]
+[ext_resource type="Resource" path="res://data/recipes/berry_pancakes.tres" id="8_lv73"]
+[ext_resource type="Resource" path="res://data/recipes/chocolate_pancakes.tres" id="9_lv73"]
+[ext_resource type="Resource" path="res://data/recipes/cream_pancakes.tres" id="10_lv73"]
+[ext_resource type="Resource" path="res://data/recipes/hot_chocolate.tres" id="11_lv73"]
+[ext_resource type="Resource" path="res://data/recipes/strawberry_cake.tres" id="12_lv73"]
+[ext_resource type="Resource" path="res://data/recipes/raspberry_cake.tres" id="13_lv73"]
+[ext_resource type="Resource" path="res://data/recipes/bread.tres" id="14_lv73"]
+[ext_resource type="Resource" path="res://data/recipes/bun.tres" id="15_lv73"]
+[ext_resource type="Resource" path="res://data/recipes/croissant.tres" id="16_lv73"]
 
 [resource]
 script = ExtResource("1_lv73")
 level_id = 72
 time_limit_seconds = 180.0
 max_simultaneous_orders = 6
-recipe_pool = Array[RecipeData]([ExtResource("2_lv73"), ExtResource("2_lv73"), ExtResource("2_lv73"), ExtResource("2_lv73"), ExtResource("2_lv73"), ExtResource("2_lv73"), ExtResource("2_lv73"), ExtResource("2_lv73"), ExtResource("2_lv73"), ExtResource("3_lv73"), ExtResource("3_lv73"), ExtResource("3_lv73"), ExtResource("3_lv73"), ExtResource("3_lv73"), ExtResource("3_lv73"), ExtResource("3_lv73"), ExtResource("3_lv73"), ExtResource("3_lv73"), ExtResource("4_lv73"), ExtResource("4_lv73"), ExtResource("4_lv73"), ExtResource("4_lv73"), ExtResource("4_lv73"), ExtResource("4_lv73"), ExtResource("4_lv73"), ExtResource("4_lv73")])
+recipe_pool = Array[RecipeData]([ExtResource("2_lv73"), ExtResource("2_lv73"), ExtResource("3_lv73"), ExtResource("3_lv73"), ExtResource("4_lv73"), ExtResource("4_lv73"), ExtResource("5_lv73"), ExtResource("5_lv73"), ExtResource("6_lv73"), ExtResource("6_lv73"), ExtResource("7_lv73"), ExtResource("7_lv73"), ExtResource("8_lv73"), ExtResource("8_lv73"), ExtResource("9_lv73"), ExtResource("9_lv73"), ExtResource("10_lv73"), ExtResource("10_lv73"), ExtResource("11_lv73"), ExtResource("12_lv73"), ExtResource("12_lv73"), ExtResource("13_lv73"), ExtResource("13_lv73"), ExtResource("14_lv73"), ExtResource("15_lv73"), ExtResource("16_lv73")])

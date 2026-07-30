@@ -9,9 +9,17 @@ signal time_updated(seconds_left: float)
 
 const _INGREDIENT_SCENE := preload("res://scenes/gameplay/ingredient.tscn")
 
+# Chance _random_ingredient() draws a "decoy" from the full ingredient roster
+# instead of the level's actual recipe-pool ingredients, purely for visual
+# board variety on low-K levels. Decoys are never required by any recipe, so
+# they don't affect satisfiability -- the existing re-roll/force-placement
+# guarantee already accounts for reduced real-ingredient density.
+const DECOY_CHANCE := 0.15
+
 var level_config: LevelConfig
 var _time_remaining: float = 0.0
 var _eligible_ingredients: Array[IngredientData] = []
+var _all_ingredients: Array[IngredientData] = []
 
 func _ready() -> void:
 	var config := GameManager.pending_level_config
@@ -25,6 +33,7 @@ func _ready() -> void:
 	_hud.set_level(config.level_id)
 
 	_build_eligible_set(config)
+	_load_all_ingredients()
 	_init_board()
 
 	_order_manager.board_node = $Ingredients
@@ -146,7 +155,20 @@ func _init_board() -> void:
 	var board_bottom := origin_y + (board_rows - 1) * CELL + CELL * 0.5
 	_hud.position_card_row(board_bottom)
 
+func _load_all_ingredients() -> void:
+	_all_ingredients.clear()
+	var dir := DirAccess.open("res://data/ingredients")
+	if not dir:
+		return
+	for file_name in dir.get_files():
+		if file_name.ends_with(".tres"):
+			var ing := load("res://data/ingredients/" + file_name) as IngredientData
+			if ing:
+				_all_ingredients.append(ing)
+
 func _random_ingredient() -> IngredientData:
+	if _all_ingredients.size() > 0 and randf() < DECOY_CHANCE:
+		return _all_ingredients[randi() % _all_ingredients.size()]
 	return _eligible_ingredients[randi() % _eligible_ingredients.size()]
 
 func _find_ingredient_data(type_id: String) -> IngredientData:
@@ -267,6 +289,19 @@ func _on_order_completed_cb(order: Order, consumed_slots: Array[Ingredient]) -> 
 	# Spawn the next order if the level still has outstanding orders.
 	if _order_manager.needs_next_order():
 		_order_manager.spawn_order(_pick_next_recipe())
+
+		# _pick_next_recipe() can fall back to a recipe the board can't
+		# currently supply (e.g. nothing in the pool fits the uncommitted
+		# board). Re-run the same satisfiability guarantee used above, now
+		# that the new order is part of _active_orders, so it never ships
+		# unfixably. Most visible as "the last order can't be completed".
+		if not _order_manager.any_active_order_satisfiable():
+			push_warning("[Board] Spawn: new order not satisfiable; force-placing")
+			var spawn_free := _board_free_counts()
+			var spawn_deficit := _order_manager.get_force_deficit(spawn_free)
+			if not spawn_deficit.is_empty():
+				if not _apply_force_placement(spawn_deficit, []):
+					push_warning("[Board] Spawn: force-placement failed — no eligible slots")
 
 # --- Recipe selection by board state ---
 
